@@ -1,0 +1,34 @@
+#ifndef KANSU_H
+#define KANSU_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <termios.h>
+#include <errno.h>
+#include <assert.h>
+#include <sys/time.h>
+#include <math.h>
+
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <ctype.h>
+#include <string.h>
+
+
+
+void on100Hz();		//0.01秒経った時1を返す
+void on2Hz();		//0.5秒経った時1を返す
+void get_delta_time();	//時刻差を返す
+void get_time();	//絶対時刻を返す
+
+int get_urg_data(char* urg_pointer,const char save_point);	//1080この距離データを記録
+
+//int get_navi_data(motion_sensor_pointer,const char save_point);	//航法データをファイルに記録
+//int save_wp(motion_sensor_pointer,const char save_point);		//wpとなる緯度経度を記録
+
+#endif
+
