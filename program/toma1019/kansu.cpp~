@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <termios.h>
+#include <errno.h>
+#include <assert.h>
+#include <sys/time.h>
+#include <math.h>
+
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <ctype.h>
+#include <string.h>
+
+#include "kansu.h"
+
+ 
+float dt,kt;
+unsigned long previoustime, currenttime;
+struct timeval tv;
+
+void get_delta_time(){	//時刻差を返す
+
+	gettimeofday(&tv,NULL);  
+	previoustime = currenttime;
+	currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
+	dt = (currenttime - previoustime) / 1000000.0;
+	//printf("dt=%06f\n",dt);
+	
+}
+
+void get_time(){	//絶対時刻を返す
+
+	gettimeofday(&tv,NULL);  //	時間を測定
+	previoustime = currenttime;
+	currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
+	dt = (currenttime - previoustime) / 1000000.0;
+	//   printf("dt=%06f\n",dt);	
+	kt=kt+dt;
+	//   printf("kt=%06f\n",kt);	
+
+}
+
+void on100Hz(){		//0.01秒経った時1を返す
+
+
+}
+
+
+void on2HZ(){		//0.5秒経った時1を返す
+
+
+}
+
+
+int get_urg_data(urg_pointer,const char save_point){
+	int a=1;
+
+
+}
+/*
+
+int get_navi_data(motion_sensor_pointer,char save_point){
+
+
+
+
+}
+
+
+
+int save_wp(motion_sensor_pointer,char save_point){
+
+
+
+}
+*/
+
+main(){
+
+
+
+}
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+#include "tsukuba_urg.h"
+
+char file1[]="URG";
+char file2[]="SAVE";
+
+main(int argc, char *argv[]){
+
+	get_urg_data(file1,file2);
+
+}

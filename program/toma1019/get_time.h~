@@ -1,0 +1,7 @@
+
+void on100Hz();		//0.01秒経った時1を返す
+void on2Hz();		//0.5秒経った時1を返す
+
+void get_delta_time();	//時刻差を返す
+void get_time();	//絶対時刻を返す
+
