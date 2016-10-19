@@ -203,7 +203,7 @@ int get_navi_data(char *motion_senser_pointer,char *save_point){
 
 		printf("緯度1=%lf 経度1=%lf \n",ido3,keido3);
 	//	printf("%d\n",j);
-		fflush(stdout);
+	//	fflush(stdout);
 
 
 		idoscale=111316.205*(ido3-ido4);				//緯度1度あたりの距離111253m

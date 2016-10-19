@@ -1,20 +1,20 @@
 #include "camera.h"
 
-#define SAVE "/home/ubuntu/Desktop/img/"
+#define SAVE "/media/itolab/disk2/work/sasai/img/"
 
 using namespace std;
 using namespace cv;
 
-//media/ubuntu/Transcend/tukuba_img
 
 Mat frame;
 int frameNo=0;
 //char a="SAVE";
 char str[255];//フレーム画像保存用
 static VideoCapture cap(0);
-static char file[]=SAVE;
+//static char file[]=SAVE;
 int camera_open(void)
 {
+	char file[]=SAVE;
 	
 	if(!cap.isOpened())//カメラデバイスが正常にオープンしたか確認．
 	{

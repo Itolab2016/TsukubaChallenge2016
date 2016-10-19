@@ -4,7 +4,8 @@ int main(){
 	while(1){
 		float a=get_joy_stickY ();
 			if(a!=0){
-				if(a>0.9){
+				if(a>32000){
+//				if(a>0.9){
 				cout<<"end"<<endl;
 				break;
 				}
