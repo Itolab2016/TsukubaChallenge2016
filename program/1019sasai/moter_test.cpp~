@@ -1,0 +1,8 @@
+#include"moter.h"
+#include"joystick.h"
+
+int maun(){
+
+	motor_open();
+	v=get_joy_stickX();
+	motor_comand(v,omega);
