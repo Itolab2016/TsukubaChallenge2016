@@ -1,4 +1,4 @@
-//TKKのセンサCSM-MG100のデータをデコードするためのテストプログラム
+//TKKのセンサCSM-MG100のデータをデコードするためのプログラム
 //Copy right Kouhei Ito 2016
 //C++を勉強しつつもほとんどCで書いていてわかりづらいかも
 //
@@ -8,8 +8,13 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int decode_test(int fd);
+typedef struct{
+  double lat;
+  double lon;
+} navidata_s;
 
+
+int get_navi_data(navidata_s* navi);
 
 
 #endif
