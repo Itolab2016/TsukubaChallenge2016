@@ -1,18 +1,7 @@
-#ifndef TSUKUBA_URG_H
-#define TSUKUBA_URG_H
+#ifndef GET_URG_DATA
+#define GET_URG_DATA
 
-#include "Urg_driver.h"
-#include "Connection_information.h"
-#include "math_utilities.h"
-#include <stdio.h>
-#include <string>
-#include <sysexits.h>
-#include <math.h>
-#include <iostream>
-#include <fstream>
-
-
-int open_URG(int argc, char *argv[]);
-int get_urg_data();	//約1080この距離データを記録
+int urg_open(void);
+int get_urg_data(void);
 
 #endif
