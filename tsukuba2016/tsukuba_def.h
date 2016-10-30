@@ -21,7 +21,8 @@
 #define DATA4 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
 #define DATA5 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
 #define DATA6 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
-#define SAVEDATA "/home/itolab/Desktop/1029TUKUBA2/data/test.csv"
+
+#define LOGFILE "/media/ubuntu/itolab/log/test.log"
 #define SAVE_PHOTO "/home/itolab/Desktop/1028sasai/test_img/"
 
 

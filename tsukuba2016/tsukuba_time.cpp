@@ -2,11 +2,12 @@
  
 static double Dt,Kt,Ut,Lt,Init_time1,Init_time2,Init_time3;
 static unsigned long Previoustime, Currenttime;
-static char timedata1[]=SAVEDATA;
-static char timedata2[255];
-static char timedata3[255];
-static char timedata4[255];
-static ofstream fs(timedata1);
+//static char timedata1[]=SAVEDATA;
+//static char timedata2[255];
+//static char timedata3[255];
+//static char timedata4[255];
+
+static ofstream fs(LOGFILE);
 
 static struct timeval Tv;
 
@@ -70,32 +71,34 @@ int on2Hz(void){		//0.5秒(Lt)経った時1を返す
 }
 
 int save(char *save_point,char *name,vector<float>& all_time){
+	char str[256];
 	get_time();
 	all_time.push_back(Kt);
-	sprintf(timedata1,"%s%s.txt",save_point,name);
-	ofstream fs(timedata1);
+	sprintf(str, "%s%s.txt", save_point,name);
+	ofstream fs(str);
 	for(int i=0;i<all_time.size();i++){
-		sprintf(timedata2,"%lf",all_time[i]);
-		fs<<timedata2<<endl;
+		sprintf(str,"%lf",all_time[i]);
+		fs<<str<<endl;
 		}
 	fs.close();
 	return 0;
 }
 
 int log(robot_t *IH){
-	sprintf(timedata2,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%d,%d,%lf,%lf,%d,%s,",
+	char str[256];
+	sprintf(str,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%d,%d,%lf,%lf,%d,%s,",
 	IH->time,IH->lat,IH->lon,IH->vx,IH->vy,IH->vz,IH->accelx,
 	IH->accely,IH->accelz,IH->angx,IH->angy,IH->angvx,IH->angvy,IH->angvz,IH->height,
 	IH->tbearing,IH->scale,IH->motor_l,IH->motor_r,IH->motor_v,
 	IH->motor_o,IH->mode,IH->image);
-	fs<<timedata2;
+	fs<<str;
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
-		sprintf(timedata3,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
-		fs<<timedata3;
+		sprintf(str,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
+		fs<<str;
 		}
 	for (int i=0;i<(sizeof IH->urg_pt/sizeof (int));i++){
-		sprintf(timedata4,"%d,",IH->urg_pt[i]);
-		fs<<timedata4;
+		sprintf(str,"%d,",IH->urg_pt[i]);
+		fs<<str;
 		}
 	fs<<endl;
 	//fs.close();
