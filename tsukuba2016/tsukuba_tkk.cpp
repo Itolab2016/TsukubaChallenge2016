@@ -1,6 +1,8 @@
 #include "tsukuba_tkk.h"
 
 
+using namespace std;
+
 int TOMAfd; //global
 int TOMAlen;
 
@@ -578,7 +580,7 @@ int get_navi_data(robot_t *tkk){
 		tkk->lon_goal=lon_o;	
 
 
-		printf("緯度1=%lf 経度1=%lf 高さ1=%lf\n",ido3,keido3,takasa2);
+	//	printf("緯度1=%lf 経度1=%lf 高さ1=%lf\n",ido3,keido3,takasa2);
 	//	fflush(stdout);
 				
 		//緯度経度データをtxt化
@@ -685,15 +687,21 @@ int save_wp(void){
 		keido1=0.0;
 		takasa1=0.0;
 
+		for(i=0;i<=3;i++){
+
+			*TOMAdummytakasa=TOMAbuffer[kouho+i+7+57];
+			
+			*TOMAdummytakasa++;		
+
+		}
+
 		for(i=0;i<=7;i++){  		//緯度,経度を抽出
 
 			*TOMAdummyido2=TOMAbuffer[kouho+i+7+41];
 			*TOMAdummykeido2=TOMAbuffer[kouho+i+7+49];
-			*TOMAdummytakasa=TOMAbuffer[kouho+i+7+57];
 
 			*TOMAdummyido2++;
 			*TOMAdummykeido2++;
-			*TOMAdummytakasa++;
 
 
 		}
