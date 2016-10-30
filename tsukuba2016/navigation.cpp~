@@ -23,7 +23,7 @@ void move(robot_t *IH){
 		{
 		IH->motor_o=n*(ramuda-ramuda0)/h;
 		}
-	IH->motor_v=0.75;
+	IH->motor_v=0.5;
 	cout<<"omega="<<IH->motor_o<<endl;
 /*
 	V_left=v+omega*wide/2;			

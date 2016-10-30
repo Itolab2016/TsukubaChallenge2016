@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <fstream>
-
+#include"tsukuba_tkk.h"
 
 
 

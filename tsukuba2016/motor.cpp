@@ -110,5 +110,4 @@ int motor_command(robot_t *IH){
 	IH->motor_l=L;
 	IH->motor_r=R;
 		//cout<<L<<"___"<<R<<endl;
-	
-}
+	}

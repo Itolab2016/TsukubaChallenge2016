@@ -1,5 +1,5 @@
 #include"avoid.h"
-#include"tsukuba_tkk.h"
+
 
 static double ramuda=1.0;
 
