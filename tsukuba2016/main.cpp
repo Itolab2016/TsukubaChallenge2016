@@ -15,6 +15,7 @@
 //#define SAVE_CAMERA_TXT "/home/ubuntu/Desktop/data/"
 #define SAVE_TIME "/media/ubuntu/Transcend/1027data/"
 
+using namespace std; 
 
 static char way[]="way";
 static char noway[]="noway";
@@ -46,6 +47,8 @@ int main(){
 	cout<<"Start !"<<endl;
 
 	robo.mode=WAIT;
+
+	//Main loop
 	while(1){
 		count=0;
 		joy_read();
