@@ -105,11 +105,10 @@ int motor_command(robot_t *IH){
 		R = 100.0;
 	}
 
-	if(on100Hz()==1){
-		serial(fd_L,buf1,str1,L);
-		serial(fd_R,buf2,str2,R);
-		IH->motor_l=L;
-		IH->motor_r=R;
+	serial(fd_L,buf1,str1,L);
+	serial(fd_R,buf2,str2,R);
+	IH->motor_l=L;
+	IH->motor_r=R;
 		//cout<<L<<"___"<<R<<endl;
-	}
+	
 }

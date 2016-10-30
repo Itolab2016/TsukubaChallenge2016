@@ -7,7 +7,7 @@
 #include <fstream>
 
 
-
+using namespace std;
 
 int navigation(void);
 void move(robot_t *IH);
