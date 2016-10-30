@@ -5,7 +5,7 @@
 using namespace std;
 
 static int fd_L,fd_R;
-int L,R;
+
 static char buf1[10];
 static char str1[10];
 static char buf2[10];

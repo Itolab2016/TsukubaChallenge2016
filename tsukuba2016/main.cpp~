@@ -22,7 +22,7 @@ static char noway[]="noway";
 
 robot_t robo;
 
-enum(WAIT,MANUAL_RUN,AUTO_RUN);
+enum{WAIT,MANUAL_RUN,AUTO_RUN};
 
 int main(){
   

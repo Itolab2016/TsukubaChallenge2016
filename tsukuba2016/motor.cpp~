@@ -2,10 +2,10 @@
 #include "joystick.h"
 #include "tsukuba_time.h"
 
-
+using namespace std;
 
 static int fd_L,fd_R;
-int L,R;
+
 static char buf1[10];
 static char str1[10];
 static char buf2[10];
@@ -110,5 +110,4 @@ int motor_command(robot_t *IH){
 	IH->motor_l=L;
 	IH->motor_r=R;
 		//cout<<L<<"___"<<R<<endl;
-	
-}
+	}
