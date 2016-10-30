@@ -9,18 +9,18 @@ int navigation(void)
 	cout<<"navigation"<<endl;
 	}
 
-void move(double latitude,double latitude_goal,double longitude,double longitude_goal,float *omega){
+//void move(double latitude,double latitude_goal,double longitude,double longitude_goal,float *omega)
+void move(robot_t *IH){
 	float wide=602;
 	float n=1.0;
 	double h=0.5;
-	double ramuda0=0;	
+	double ramuda0;	
 	float omega1;
 	ramuda0=ramuda;
-	ramuda=atan(longitude_goal-longitude/latitude_goal-latitude);
+	ramuda=atan(IH->lon_goal-IH->lon/IH->lat_goal-IH->lat);
 	if(change_way()==0)
 		{
-		omega1=n*(ramuda-ramuda0)/h;
-		*omega=omega1;
+		IH->motor_o=n*(ramuda-ramuda0)/h;
 		}
 	cout<<"omega="<<omega<<endl;
 /*

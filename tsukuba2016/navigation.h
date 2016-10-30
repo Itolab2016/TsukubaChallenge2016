@@ -10,5 +10,5 @@
 using namespace std;
 
 int navigation(void);
-void move(double latitude,double latitude_goal,double longitude,double longitude_goal,float *omega);
+void move(robot_t *IH);
 #endif
