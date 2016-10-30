@@ -80,10 +80,10 @@ vectar blh2ecef(double phi, double ramda, double height);
 vectar ecef2blh(vectar ec);
 int set_waypoint(void);
 
-vectar blh2ecef(double, double, double);
-vectar ecef2blh(vectar);
-matrix matmat(matrix *, matrix *);
-vectar matvec(matrix, vectar);
+extern vectar blh2ecef(double, double, double);
+extern vectar ecef2blh(vectar);
+extern matrix matmat(matrix *, matrix *);
+extern vectar matvec(matrix, vectar);
 
 matrix ret_mat;
 typedef double (*daryp)[MAXN][MAXN];

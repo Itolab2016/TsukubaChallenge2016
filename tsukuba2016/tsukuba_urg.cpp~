@@ -76,7 +76,7 @@ int get_urg_data(robot_t* robo)
     return 1;
   }
 	for (int i=0; i<data.size(); i++){
-		robo->urg_pt[i]=data[i];
+		robo->urg[i]=data[i];
 	}
 
 
