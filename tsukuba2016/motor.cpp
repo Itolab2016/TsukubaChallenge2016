@@ -2,7 +2,7 @@
 #include "joystick.h"
 #include "tsukuba_time.h"
 
-
+using namespace std;
 
 static int fd_L,fd_R;
 int L,R;
