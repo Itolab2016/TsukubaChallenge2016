@@ -50,20 +50,29 @@ int main(){
 		count=0;
 		joy_read();
 		button=get_joy_button ();
+
 		//モード分岐
-		//待機モード
+
+		//======== 待機モード ========
 		if(robo.mode==WAIT){
-			if(button==15/*SHIKAKU*/){//手動走行に変更
+
+			if(button==15/*SHIKAKU*/){			//手動走行に変更
 				robo.mode=MANUAL_RUN;
 				reset_time();
 				cout<<"data_pick_mode"<<endl;
 			}
-			else if(button==12/*SANKAKU*/){//自立走行に変更
+
+			else if(button==12/*SANKAKU*/){	//自立走行に変更
 				robo.mode=AUTO_RUN;
+				set_waypoint();
+				reset_time();
 			}
+
 			else if(button==14/*BATU*/)break;//終了
+
 		}
-		//手動モード
+
+		//======== 手動モード ========
 		else if(robo.mode==MANUAL_RUN){
 			motor_remote(&robo);
 			motor_command(&robo);
@@ -73,6 +82,7 @@ int main(){
 				cout<<"break"<<endl;
 				robo.mode=WAIT;
 			}
+			//2Hzループ
 			if(on2Hz()==1)
 			{
 				save(save_time,noway,auto_time);
@@ -81,47 +91,22 @@ int main(){
 				get_navi_data(&robo);
 				get_urg_data(&robo);
 			}
+			//100Hzループ
+			if(on100Hz()==1){
 
+			}
+
+			//WP記録
 			if(button==13/*MARU*/){
 				save(save_time,way,way_time);
 			//	save_wp(argc, argv);
 				cout<<"way_get"<<endl;
 			}
-
 		}
-		//自律モード
+
+
+		//======== 自律モード ========
 		else if(robo.mode==AUTO_RUN){
-
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	if(button==14/*BATU*/)break;
-	if(button==12/*SANKAKU*/)//自律走行
-	{
-		set_waypoint();
-		reset_time();
-		while(1)
-		{
-			joy_read();
 			if(on2Hz()==1)
 				{
 					save(save_time,noway,auto_time);
@@ -149,49 +134,14 @@ int main(){
 			if(button==3/*START*/)
 			{
 					cout<<"break"<<endl;
-					break;
+					robo.mode=WAIT;
 			}
 		}
-	}
-	if(button==15/*SHIKAKU*/)//手動走行
-	{
-		reset_time();
-		cout<<"data_pick_mode"<<endl;
-		while(1)
-		{
-			joy_read();
-			button=get_joy_button ();
-			motor_remote(&robo);
-			motor_command(&robo);
+	}//<--while(1)に対応
 
-			if(button==3/*START*/)
-			{
-				cout<<"break"<<endl;
-				break;
-			}
-
-			
-			if(on2Hz()==1)
-			{
-				save(save_time,noway,auto_time);
-				capture(save_photo);
-			//	cout<<"ok"<<endl;
-				get_navi_data(&robo);
-				get_urg_data(&robo);
-			}
-
-			if(button==13/*MARU*/){
-				save(save_time,way,way_time);
-			//	save_wp(argc, argv);
-				cout<<"way_get"<<endl;
-			}
-			
-		}
-	}
-
-	}
-	v=0;
-	omega=0;
-	motor_command(v,omega);
+	//停止して終了
+	robo.motor_v=0;
+	robo.motor_o=0;
+	motor_command(&robo);
 	motor_close();
 }	

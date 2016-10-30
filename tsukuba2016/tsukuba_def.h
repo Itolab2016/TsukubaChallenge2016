@@ -1,7 +1,7 @@
 #ifndef TSUKUBA_DEF_H
 #define TSUKUBA_DEF_H
 
-using namespace std;
+//using namespace std;
 
 /*デバイス設定*/
 #define TKK "/dev/SERIAL_TKK"

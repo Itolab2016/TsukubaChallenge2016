@@ -13,6 +13,20 @@ using namespace std;
 #define SERIAL_PORT1 "/dev/MOTOR_R"
 #define SERIAL_PORT2 "/dev/MOTOR_L" 
 
+
+/*txt保存 読み込み*/
+#define DATA1 "/media/ubuntu/itolab/1030data/idokeido.txt"
+#define DATA2 "/media/ubuntu/itolab/1030data/kouho.txt"
+#define DATA3 "/media/ubuntu/itolab/1030data/manualidokeido.txt"
+#define DATA4 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
+#define DATA5 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
+#define DATA6 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
+
+#define READ1 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
+#define READ2 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
+#define READ3 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
+
+
 /*--- 定数 */
 #define	MAXN	12
 
@@ -77,6 +91,7 @@ typedef struct {
 	char image[80];			//13.画像名
 	point3d_t img_pt[2000];		//14.カメラ点群
 	unsigned int urg_pt[1081];	//15.URG点群	
+	double lat_goal,lon_goal;
 	
 
 } robot_t;
