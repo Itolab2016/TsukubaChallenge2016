@@ -1,5 +1,11 @@
 #include "tsukuba_tkk.h"
-#define TOMA "/media/ubuntu/itolab/1030data"
+
+#define DATA1 "/media/ubuntu/itolab/1030data/idokeido.txt"
+#define DATA2 "/media/ubuntu/itolab/1030data/kouho.txt"
+#define DATA3 "/media/ubuntu/itolab/1030data/manualidokeido.txt"
+#define DATA4 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
+#define DATA5 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
+#define DATA6 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
 
 int TOMAfd; //global
 int TOMAlen;
@@ -56,18 +62,21 @@ vector<double> latwaydata;
 vector<double> lonwaydata;
 vector<double> takasawaydata;
 
-char file[]=TOMA;
-char file1[255];
-//txtに書き出し
-sprintf(file1,"%s/idokeido.txt",file);
-ofstream GPSidokeido(file1);		//outo
-ofstream GPSKOUHO("/media/ubuntu/itolab/1030data/kouho.txt");
-ofstream GPSaccel("/media/ubuntu/itolab/1030data/accel.txt");
+char file1[]=DATA1;
+char file2[]=DATA2;
+char file3[]=DATA3;
+char file4[]=DATA4;
+char file5[]=DATA5;
+char file6[]=DATA6;
 
-ofstream GPSmanualidokeido("/media/ubuntu/itolab/1030data/manualidokeido.txt"); //manual
-ofstream GPSido("/media/ubuntu/itolab/1030data/latitude_goal.txt");		
-ofstream GPSkeido("/media/ubuntu/itolab/1030data/longitude_goal.txt");
-ofstream GPStakasa("/media/ubuntu/itolab/1030data/takasa_goal.txt");
+//txtに書き出し
+ofstream GPSidokeido(file1);		//outo
+ofstream GPSKOUHO(file2);
+
+ofstream GPSmanualidokeido(file3); //manual
+ofstream GPSido(file4);		
+ofstream GPSkeido(file5);
+ofstream GPStakasa(file6);
 
 //txt読み込み
 ifstream latifs("/media/ubuntu/itolab/1030data/latitude_goal.txt");
@@ -75,13 +84,13 @@ ifstream lonifs("/media/ubuntu/itolab/1030data/longitude_goal.txt");
 ifstream takasaifs("/media/ubuntu/itolab/1030data/takasa_goal.txt");
 
 
-int open_TKK(int argc, char *argv[]){
+int open_TKK(void){
 
 	// デバイスファイル（シリアルポート）オープン
 	TOMAfd = open(TKK,O_RDWR);
 	if(TOMAfd<0){
 		// デバイスの open() に失敗したら
-		perror(argv[1]);
+		printf("TKK motion sensor error!\n");
 		exit(1);
 	}
 	TKK_serial();
@@ -287,7 +296,7 @@ vectar ecef2enu(vectar dest, vectar origin)
 	return ret;
 }
 
-int get_navi_data(int argc, char *argv[],robot_t *tkk,double *latitude,double *longitude,double *latitude_goal,double *longitude_goal){
+int get_navi_data(robot_t *tkk,double *latitude,double *longitude,double *latitude_goal,double *longitude_goal){
 
 	int i,k=1;
 	int kouho=0,INS=0;
@@ -370,9 +379,8 @@ int get_navi_data(int argc, char *argv[],robot_t *tkk,double *latitude,double *l
 		//     continue;
 	}
 	if(TOMAlen<0){
-		printf("%s: ERROR\n",argv[0]);
+		printf("TKK 受信不可\n");
 		// read()が負を返したら何らかのI/Oエラー
-		perror("");
 		exit(2);
 	}
 	// read()が正を返したら受信データ数
@@ -576,11 +584,6 @@ int get_navi_data(int argc, char *argv[],robot_t *tkk,double *latitude,double *l
 
 		printf("緯度1=%lf 経度1=%lf 高さ1=%lf\n",ido3,keido3,takasa2);
 	//	fflush(stdout);
-
-
-		//加速度データをtxt化
-		sprintf(str,"%f %f %f",aX,aY,aZ);
-		GPSaccel<<str<<endl;
 				
 		//緯度経度データをtxt化
 		sprintf(str,"%d\t%lf\t%lf\t%d",Counter1++,ido3,keido3,k);
@@ -599,7 +602,7 @@ int get_navi_data(int argc, char *argv[],robot_t *tkk,double *latitude,double *l
 }
 
 
-int save_wp(int argc, char *argv[]){
+int save_wp(void){
 
 	int i,t,k=1;
 	int kouho=0,INS=0;
@@ -634,9 +637,8 @@ int save_wp(int argc, char *argv[]){
 		//     continue;
 	}
 	if(TOMAlen<0){
-		printf("%s: ERROR\n",argv[0]);
+		printf("TKK 受信不可\n");
 		// read()が負を返したら何らかのI/Oエラー
-		perror("");
 		exit(2);
 	}
 	// read()が正を返したら受信データ数

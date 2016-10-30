@@ -21,12 +21,12 @@
 #include "tsukuba_def.h"
 
 
-int open_TKK(int argc, char *argv[]);			//TKKデバイスをオープン
+int open_TKK(void);			//TKKデバイスをオープン
 
-int get_navi_data(int argc, char *argv[],robot_t *tkk,double *latitude,double *longitude,
+int get_navi_data(robot_t *tkk,double *latitude,double *longitude,
 double *latitude_goal,double *longitude_goal);		//航法データをファイルに記録
 
-int save_wp(int argc, char *argv[]);			//wpとなる緯度経度を記録
+int save_wp(void);			//wpとなる緯度経度を記録
 int set_waypoint(void);					//wpを設定
 
 int axis_transform(void);				//座標変換
