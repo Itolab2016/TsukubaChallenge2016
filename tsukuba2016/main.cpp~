@@ -7,7 +7,7 @@
 #include "navigation.h"
 #include "avoid.h"
 #include "localization.h"
-//#include "tsukuba_def.h"
+#include "tsukuba_def.h"
 
 
 #define SAVE_PHOTO "/home/itolab/Desktop/1028sasai/test_img/"
