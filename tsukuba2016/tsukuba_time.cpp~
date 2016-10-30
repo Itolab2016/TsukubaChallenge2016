@@ -82,7 +82,7 @@ int save(char *save_point,char *name,vector<float>& all_time){
 	return 0;
 }
 
-int log(char *save_point,char *name,robot_t *IH){
+int log(robot_t *IH){
 	sprintf(timedata2,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%d,%d,%lf,%lf,%d,%s,",
 	IH->time,IH->lat,IH->lon,IH->vx,IH->vy,IH->vz,IH->accelx,
 	IH->accely,IH->accelz,IH->angx,IH->angy,IH->angvx,IH->angvy,IH->angvz,IH->height,

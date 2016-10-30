@@ -104,8 +104,10 @@ int log(robot_t *IH){
 
 int fs_close(void){
 	fs.close();
-	}
+}
 
+
+#if 0
 int read_log(char *save_point,char *name,robot_t *IH){
 	FILE *fp;
 	char *p;
@@ -192,7 +194,7 @@ int read_log(char *save_point,char *name,robot_t *IH){
 #endif
 	}	
 }
-		
+#endif
 
 
 
