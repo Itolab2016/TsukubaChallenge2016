@@ -22,7 +22,7 @@ double get_time(void);		//絶対時刻を返す
 int fs_close(void);
 int reset_time(void);		//時間をリセット
 int save(char *save_point,char *name , vector<float>& all_time);	//時間経過を記録
-int log(char *save_point,char *name,robot_t *IH);
+int log(robot_t *IH);
 int read_log(char *save_point,char *name,robot_t *IH);
 #endif
 
