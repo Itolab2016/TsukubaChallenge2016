@@ -26,7 +26,6 @@
 #include <algorithm>
 #include <sysexits.h>
 #include <string.h>
-#include "tsukuba_def.h"
 
 using namespace std;
 
