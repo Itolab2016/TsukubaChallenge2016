@@ -1,11 +1,5 @@
 #include "tsukuba_tkk.h"
 
-#define DATA1 "/media/ubuntu/itolab/1030data/idokeido.txt"
-#define DATA2 "/media/ubuntu/itolab/1030data/kouho.txt"
-#define DATA3 "/media/ubuntu/itolab/1030data/manualidokeido.txt"
-#define DATA4 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
-#define DATA5 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
-#define DATA6 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
 
 int TOMAfd; //global
 int TOMAlen;
@@ -69,6 +63,10 @@ char file4[]=DATA4;
 char file5[]=DATA5;
 char file6[]=DATA6;
 
+char read1[]=READ1;
+char read2[]=READ2;
+char read3[]=READ3;
+
 //txtに書き出し
 ofstream GPSidokeido(file1);		//outo
 ofstream GPSKOUHO(file2);
@@ -79,9 +77,9 @@ ofstream GPSkeido(file5);
 ofstream GPStakasa(file6);
 
 //txt読み込み
-ifstream latifs("/media/ubuntu/itolab/1030data/latitude_goal.txt");
-ifstream lonifs("/media/ubuntu/itolab/1030data/longitude_goal.txt");
-ifstream takasaifs("/media/ubuntu/itolab/1030data/takasa_goal.txt");
+ifstream latifs(read1);
+ifstream lonifs(read2);
+ifstream takasaifs(read3);
 
 
 int open_TKK(void){
@@ -296,7 +294,7 @@ vectar ecef2enu(vectar dest, vectar origin)
 	return ret;
 }
 
-int get_navi_data(robot_t *tkk,double *latitude,double *longitude,double *latitude_goal,double *longitude_goal){
+int get_navi_data(robot_t *tkk){
 
 	int i,k=1;
 	int kouho=0,INS=0;
@@ -544,11 +542,6 @@ int get_navi_data(robot_t *tkk,double *latitude,double *longitude,double *latitu
 		lon=keido3;
 		hig=takasa2;
 
-		*latitude=ido3;
-		*longitude=keido3;
-		*latitude_goal=lat_o;
-		*longitude_goal=lon_o;
-
 		point1 = blh2ecef(ido3, keido3, takasa2);
 		point2 = blh2ecef(ido4, keido4, takasa3);
 		point = ecef2enu(point1, point2);
@@ -579,7 +572,10 @@ int get_navi_data(robot_t *tkk,double *latitude,double *longitude,double *latitu
 		tkk->lon=keido3;
 		tkk->height=takasa2;	
 		
-		tkk->scale=scale;	
+		tkk->scale=scale;
+
+		tkk->lat_goal=lat_o;
+		tkk->lon_goal=lon_o;	
 
 
 		printf("緯度1=%lf 経度1=%lf 高さ1=%lf\n",ido3,keido3,takasa2);

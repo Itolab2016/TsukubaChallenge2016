@@ -23,8 +23,7 @@
 
 int open_TKK(void);			//TKKデバイスをオープン
 
-int get_navi_data(robot_t *tkk,double *latitude,double *longitude,
-double *latitude_goal,double *longitude_goal);		//航法データをファイルに記録
+int get_navi_data(robot_t *tkk);		//航法データをファイルに記録
 
 int save_wp(void);			//wpとなる緯度経度を記録
 int set_waypoint(void);					//wpを設定
