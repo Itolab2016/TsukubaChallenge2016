@@ -1,7 +1,4 @@
 #include "tsukuba_tkk.h"
-//このファイルにあった座標変換関係の関数やマクロは
-//navigation.cppとnavigation.h
-//に移動しました
 
 using namespace std;
 
@@ -47,8 +44,6 @@ vector<double> latwaydata;
 vector<double> lonwaydata;
 vector<double> takasawaydata;
 
-char file1[]=DATA1;
-char file2[]=DATA2;
 char file3[]=DATA3;
 char file4[]=DATA4;
 char file5[]=DATA5;
@@ -59,8 +54,6 @@ char read2[]=READ2;
 char read3[]=READ3;
 
 //txtに書き出し
-ofstream GPSidokeido(file1);		//outo
-ofstream GPSKOUHO(file2);
 
 ofstream GPSmanualidokeido(file3); //manual
 ofstream GPSido(file4);		
@@ -71,7 +64,6 @@ ofstream GPStakasa(file6);
 ifstream latifs(read1);
 ifstream lonifs(read2);
 ifstream takasaifs(read3);
-
 
 int open_TKK(void){
 
@@ -231,11 +223,7 @@ int get_navi_data(robot_t *tkk){
 		mojicount++;
 	} 
 
-	lat=0.0;
-	lon=0.0;
-	hig=0.0;
-
-	if(TOMAbuffer[kouho+6]==0x40 /*&& TOMAbuffer[INS+7+38]==0x04*/ && TOMAbuffer[kouho+83]==0x16 && TOMAbuffer[INS+59]==0x16){ 
+	if(TOMAbuffer[kouho+6]==0x40 && TOMAbuffer[INS+7+38]==0x04 && TOMAbuffer[kouho+83]==0x16 && TOMAbuffer[INS+59]==0x16){ 
 		//航法データ受け取っているか、GPSが有効であるか、INSデータと航法データが全部入っているか
 
 		ido1=0.0;
@@ -386,18 +374,7 @@ int get_navi_data(robot_t *tkk){
 
 
 	//	printf("緯度1=%lf 経度1=%lf 高さ1=%lf\n",ido3,keido3,takasa2);
-	//	fflush(stdout);
 				
-		//緯度経度データをtxt化
-		sprintf(str,"%d\t%lf\t%lf\t%d",Counter1++,ido3,keido3,k);
-		GPSidokeido<<str<<endl;
-						
-		//航法データをtxt化
-		for(i=0;i<=86;i++){
-			sprintf(str,"%02X ",TOMAbuffer[kouho+i]);
-			GPSKOUHO<<str;
-		}
-		GPSKOUHO<<endl;	
 
 
 	}
@@ -485,7 +462,7 @@ int save_wp(void){
 		}
 	} 
 
-	if(TOMAbuffer[kouho+6]==0x40 /*&& TOMAbuffer[INS+7+38]==0x04*/ && TOMAbuffer[kouho+83]==0x16 && TOMAbuffer[INS+59]==0x16){ 
+	if(TOMAbuffer[kouho+6]==0x40 && TOMAbuffer[INS+7+38]==0x04 && TOMAbuffer[kouho+83]==0x16 && TOMAbuffer[INS+59]==0x16){ 
 		//航法データ受け取っているか、GPSが有効であるか、INSデータと航法データが全部入っているか
 
 		ido1=0.0;
@@ -571,14 +548,6 @@ int change_waypoint(void){
 
 		vectar ecef, ecef_o, enu;
 
-/*		lat	= 36.532931;			//--- 変換する位置座標
-		lon	= 136.629335; 
-		hig	= 45.664;
-
-		lat_o	= 36.533275;			//--- 原点の座標
-		lon_o	= 136.629541;
-		hig_o	= 57.829900;
-*/
 		ecef = blh2ecef(lat, lon, hig);
 		ecef_o = blh2ecef(lat_o, lon_o, hig_o);
 		enu = ecef2enu(ecef, ecef_o);		
@@ -588,9 +557,6 @@ int change_waypoint(void){
 			return 1;
 		}
 	
-	//	printf("result= %.3f %.3f %.3f\n", enu.a[0], enu.a[1], enu.a[2]);
-	//	printf("length= %.3f, angle(deg)= %.3f\n",
-	//	sqrt(SQR(enu.a[0])+SQR(enu.a[1])), (180.0/PI)*atan(enu.a[1]/ enu.a[0]));
 
 		return 0;
 }

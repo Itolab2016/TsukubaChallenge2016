@@ -17,8 +17,6 @@
 /*txt保存 読み込み*/
 #define LOGFILE "/media/ubuntu/itolab/log/test.log"
 
-#define DATA1 "/media/ubuntu/itolab/1030data/idokeido.txt"
-#define DATA2 "/media/ubuntu/itolab/1030data/kouho.txt"
 #define DATA3 "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 #define DATA4 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
 #define DATA5 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
