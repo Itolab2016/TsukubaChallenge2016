@@ -30,6 +30,7 @@ static Mat descriptor1, descriptor2;//特徴量記述用
 static Mat K=(Mat_<double>(3,3,CV_64FC1) <<CAMERA);//K 
 static Mat distortionCoefficient=(cv::Mat_<float>(4,1) <<DISTORTION);//歪み係数(本番カメラ）
 
+
 	
 int camera_open(void)
 {
@@ -41,23 +42,12 @@ int camera_open(void)
 		exit(1);
 		return -1;
 	}
-/*
-	for(int i=0;i<open;i++)
-	{
-		capture0(file);//写真取る
-	}
-*/	
 }
 
 static int capture0 (char *save_point)
 {	
 	Mat frame0;
 	cap >> frame0;
-	//フレーム画像を保存する．
-/*
-	sprintf(str,"%sopen.png",save_point);
-        imwrite(str, frame0);
-*/
 }
 
 int capture (robot_t *IH)
@@ -69,8 +59,7 @@ int capture (robot_t *IH)
 	frameNo++;
 	sprintf(str,"%s%04d%s.png",save_point,frameNo);
         imwrite(str, frame);
-	sprintf(str,"%d",frameNo);
-	IH->image=str;
+	sprintf(IH->image,"%d",frameNo);
 	
 }
 
@@ -84,9 +73,9 @@ int capture2 (robot_t *IH)
 	}
 	sprintf(str,"%s%04d.png",save_point,frameNo);
         imwrite(str, frame1);
-	sprintf(str,"%d",frameNo);
+	sprintf(IH->image,"%d",frameNo);
 	frameNo++;
-	IH->image=str;
+
 }
 
 
@@ -131,6 +120,7 @@ static void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keyp
 
 
 int sfm(char *save_point,robot_t *IH){
+	double scale;
 	scale=IH->scale;
 	double focal=(K.at<float>(0,0)+K.at<float>(1,1))/2;//焦点距離（本番カメラ）
 	Point2d pp(K.at<float>(0,2), K.at<float>(1,2));//中心座標(本番カメラ)
