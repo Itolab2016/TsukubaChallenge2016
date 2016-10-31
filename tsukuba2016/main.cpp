@@ -35,8 +35,6 @@ int main(){
   int button;
   vector<float> way_time;
   vector<float> auto_time;
-  char save_photo[]=SAVE_PHOTO;
-  char save_txt[]=SAVE_TXT;
   //	char save_time[]=FILE_TIME;
   camera_open();
   motor_open();
@@ -90,7 +88,7 @@ int main(){
       if(on2Hz()==1)
       {
 	time_stamp(&robo);
-        capture(save_photo);  //画像撮影
+        capture(&robo);  //画像撮影
         get_navi_data(&robo); //
         get_urg_data(&robo);  //
       }
