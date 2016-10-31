@@ -7,7 +7,8 @@ using namespace std;
 
 static double lambda=1.0;
 matrix ret_mat;
-
+double xt_old;
+double yt_old;
 
 vectar blh2ecef(double phi, double ramda, double height)
 /* 緯度,経度,高さからECEF座標に変換 */
@@ -195,18 +196,59 @@ vectar ecef2enu(vectar dest, vectar origin)
 
 
 
-int navigation(void)
-	{	
+int navigation(robot_t *robo)
+//比例航法を用いてロボットを誘導（navigation）する。
+
+{	
+  double wide=602.0;
+	double n=1.0;
+	double h=0.5;
+	double lambda_old;	
+	double omega1;
+  double lat,lon,high,x,y;
+  double lat_g, lon_g;
+  double xt,yt;
+  vectar ecef_o;  //ロボットのecef座標
+  vectar ecef_t;  //ターゲットのecef座標
+  vectar enu_t;   //ターゲットのenu座標
+  
+  //変数を受ける(変数の文字列が長くて見難いので)
+  lat = robo->lat;
+  lon = robo->lon;
+  high= robo->height;
+  lat_g=robo->lat_goal;
+  lon_g=robo->lon_goal;
+  
+  //座標変換　緯度経度高さ->ロボット原点平面座標
+  ecef_o = blh2ecef(lat, lon, high);  //ロボットの座標（ここが原点）
+  ecef_t = blh2ecef(lat_g, lon_g, high);//ターゲットの座標
+  enu_t = ecef2enu(ecef_t,ecef_o);  //enu座標系でのターゲットの座標
+  x=0.0;
+  y=0.0;
+  xt=enu_t.a[0];
+  yt=enu_t.a[1];
+  
+  //======== 比例航法 ========
+  //比例航法は参考文献
+  
+  
+  
+  //終了前に現在の値を記憶する（数値微分のため）
+  xt_old = xt;
+  yt_old = yt;
+
 	cout<<"navigation"<<endl;
-	}
+	
+	return 0;
+}
 
 //void move(double latitude,double latitude_goal,double longitude,double longitude_goal,float *omega)
-void move(robot_t *IH){
+int move(robot_t *IH){
 //関数名がmoveでは英語の意味から何をしようとしているかわからなくなる可能性があるので
 //以下の機能はnavigation()の方に移します。
 //それに伴ってメイン関数を修正しました。(2016.10.30 ITO)
 
-
+#if 0
   double wide=602.0;
 	double n=1.0;
 	double h=0.5;
@@ -214,10 +256,6 @@ void move(robot_t *IH){
 	double omega1;
   double lat,lon,high,x,y,xt,yt;
 
-
-
-
-#if 0
   //以下の計算は平面座標系に変換されていないので正しくありません。（2016.10.31 ITO）
 	lambda_old=lambda;
 	lambda=atan(IH->lon_goal-IH->lon/IH->lat_goal-IH->lat);
@@ -232,5 +270,6 @@ void move(robot_t *IH){
 	V_right=v-omega*wide/2;
 */
 #endif
-
+  cout << "Called move() function."<<endl;
+  return 0;
 }

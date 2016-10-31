@@ -60,16 +60,16 @@ vectar blh2ecef(double, double, double);
 vectar ecef2blh(vectar);
 matrix matmat(matrix *, matrix *);
 vectar matvec(matrix, vectar);
-
-
-typedef double (*daryp)[MAXN][MAXN];
-typedef double (dary)[MAXN][MAXN];
-
 double abs1(double);
+
+//typedef double (*daryp)[MAXN][MAXN];
+//typedef double (dary)[MAXN][MAXN];
+
+
 //========以上が座標変換関連
 
 
 
-int navigation(void);
-void move(robot_t *IH);
+int navigation(robot_t *robo);
+int move(robot_t *IH);
 #endif
