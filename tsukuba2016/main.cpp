@@ -29,13 +29,10 @@ enum{WAIT,MANUAL_RUN,AUTO_RUN};
 int main(){
 
   int count=0;
-  //float v,omega;
-  //double scale=100;
   double latitude_goal,longitude_goal;
   int button;
   vector<float> way_time;
   vector<float> auto_time;
-  //	char save_time[]=FILE_TIME;
   camera_open();
   motor_open();
   joy_open();
@@ -101,8 +98,8 @@ int main(){
 
       //WP記録
       if(button==13/*MARU*/){
-        //save(FILE_TIME,way,way_time);
-        save_wp();
+        time_stamp(&robo);
+        save_wp(&robo);
         cout<<"way_get"<<endl;
       }
     }
@@ -112,8 +109,8 @@ int main(){
     else if(robo.mode==AUTO_RUN){
       if(on2Hz()==1)
       {
-        /*					capture2(save_photo);
-
+        /*	capture2(&robo);
+	
                     if(count!=0)
                     {
                     localization();//未完成

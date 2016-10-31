@@ -76,11 +76,11 @@ int time_stamp(robot_t *IH){
 }
 
 int log(robot_t *IH){
-	sprintf(timedata2,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%d,%d,%lf,%lf,%d,%s,",
+	sprintf(timedata2,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%d,%d,%lf,%lf,%d,%s,%lf,%lf,",
 	IH->time,IH->lat,IH->lon,IH->vx,IH->vy,IH->vz,IH->accelx,
 	IH->accely,IH->accelz,IH->angx,IH->angy,IH->angvx,IH->angvy,IH->angvz,IH->height,
 	IH->tbearing,IH->scale,IH->motor_l,IH->motor_r,IH->motor_v,
-	IH->motor_o,IH->mode,IH->image);
+	IH->motor_o,IH->mode,IH->image,IH->lat_goal,IH->lon_goal);
 	fs<<timedata2;
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
 		sprintf(timedata3,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
@@ -104,8 +104,8 @@ int read_log(char *save_point,char *name,robot_t *IH){
 	char *p;
 	char buf[200000]={0};
 	char filename[100];
-	char *ary[22];
-	double data[22]={0};
+	char *ary[24];
+	double data[24]={0};
 	int i=1;
 	int k=0;
 	int j=0;
@@ -123,12 +123,12 @@ int read_log(char *save_point,char *name,robot_t *IH){
 	data[0]=atof(ary[0]);
 	while(1){
 			p=strtok(NULL,",");
-			if(i<22){
+			if(i<24){
 				ary[i]=p;
 				data[i]=atof(ary[i]);
 		
 			}
-			else if(i==22){
+			else if(i==24){
 				sprintf(IH->image,"%s",p);
 		
 			}
@@ -182,6 +182,9 @@ int read_log(char *save_point,char *name,robot_t *IH){
 	IH->motor_v=data[19];
 	IH->motor_o=data[20];
 	IH->mode=data[21];
+	IH->lat_goal=data[22];
+	IH->lon_goal=data[23];
+
 #endif
 	}	
 }
