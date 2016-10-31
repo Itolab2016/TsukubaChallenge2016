@@ -16,7 +16,7 @@ static int open=40;
 static int frameNo=0;
 static char str[255];//フレーム画像保存用
 static VideoCapture cap(0);
-static char file[]=SAVE;
+static char file[]=;
 static Mat R_f= Mat::eye(3, 3, CV_64FC1);//回転合計
 static Mat t_f= Mat::zeros(3, 1, CV_64FC1);//並進合計
 static char filename1[100];//3次元復元画像1
@@ -63,20 +63,21 @@ static int capture0 (char *save_point)
 */
 }
 
-int capture (char *save_point)
+int capture (char *save_point,robot_t *IH)
 {
 	
 	cap >> frame;
 
 	//フレーム画像を保存する．
 	frameNo++;
-	sprintf(str,"%s%04d.png",save_point,frameNo);
+	sprintf(str,"%s%04d%s.png",save_point,frameNo);
         imwrite(str, frame);
+	IH->image=frameNo;
 	
 }
 
 
-int capture2 (char *save_point)
+int capture2 (char *save_point,robot_t *IH)
 {
 
 	frame2=frame1.clone();
@@ -86,6 +87,7 @@ int capture2 (char *save_point)
 	sprintf(str,"%s%04d.png",save_point,frameNo);
         imwrite(str, frame1);
 	frameNo++;
+	IH->image=frameNo;
 }
 
 

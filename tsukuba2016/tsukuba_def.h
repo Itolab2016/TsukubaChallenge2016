@@ -13,6 +13,7 @@
 
 
 /*txt保存 読み込み*/
+#define SAVE IMG"/home/ubuntu/Desktop/img/"
 #define LOGFILE "/media/ubuntu/itolab/log/test.log"
 
 #define DATA3 "/media/ubuntu/itolab/1030data/manualidokeido.txt"
