@@ -9,7 +9,6 @@ static double lambda=1.0;
 matrix ret_mat;
 double xt_old;
 double yt_old;
-double lat, lon, hig, lat_o, lon_o, hig_o;
 
 vectar blh2ecef(double phi, double ramda, double height)
 /* 緯度,経度,高さからECEF座標に変換 */
@@ -200,6 +199,7 @@ int set_waypoint(void){
 }
 
 int change_waypoint(void){
+		double lat, lon, hig, lat_o, lon_o, hig_o;
 
 		vectar ecef, ecef_o, enu;
 
