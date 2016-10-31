@@ -194,6 +194,37 @@ vectar ecef2enu(vectar dest, vectar origin)
 	return ret;
 }
 
+int set_waypoint(void){
+
+	copy(istream_iterator<double>(latifs), istream_iterator<double>(),back_inserter(latwaydata));
+	copy(istream_iterator<double>(lonifs), istream_iterator<double>(),back_inserter(lonwaydata));
+	copy(istream_iterator<double>(takasaifs), istream_iterator<double>(),back_inserter(takasawaydata));
+
+	lat_o=latwaydata[p];
+	lon_o=lonwaydata[p];
+	hig_o=takasawaydata[p];
+	
+
+	printf("%lf %lf %lf\n",lat_o,lon_o,hig_o);
+	p++;
+}
+
+int change_waypoint(void){
+
+		vectar ecef, ecef_o, enu;
+
+		ecef = blh2ecef(lat, lon, hig);
+		ecef_o = blh2ecef(lat_o, lon_o, hig_o);
+		enu = ecef2enu(ecef, ecef_o);		
+
+		if(enu.a[0]<=0.5 && enu.a[1]<=0.5){
+			set_waypoint();
+			return 1;
+		}
+	
+
+		return 0;
+}
 
 
 int navigation(robot_t *robo)

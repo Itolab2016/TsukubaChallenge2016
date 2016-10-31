@@ -65,10 +65,12 @@ double abs1(double);
 //typedef double (*daryp)[MAXN][MAXN];
 //typedef double (dary)[MAXN][MAXN];
 
+int axis_transform(void);				//座標変換
 
 //========以上が座標変換関連
 
-
+int set_waypoint(void);					//wpを設定
+int change_waypoint(void);
 
 int navigation(robot_t *robo);
 int move(robot_t *IH);

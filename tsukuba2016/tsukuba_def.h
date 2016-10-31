@@ -16,10 +16,7 @@
 #define SAVE IMG"/home/ubuntu/Desktop/img/"
 #define LOGFILE "/media/ubuntu/itolab/log/test.log"
 
-#define DATA3 "/media/ubuntu/itolab/1030data/manualidokeido.txt"
-#define DATA4 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
-#define DATA5 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
-#define DATA6 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
+#define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 
 
 #define SAVE_PHOTO "/home/itolab/Desktop/1028sasai/test_img/"
