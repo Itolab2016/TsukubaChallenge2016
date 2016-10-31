@@ -17,7 +17,7 @@
 #include <iterator>
 #include <vector>
 #include <algorithm>
-
+#include "navigation.h"
 #include "tsukuba_def.h"
 
 

@@ -1,3 +1,6 @@
+//つくばチャレンジ2016用プログラム
+//メイン関数
+//
 #include "motor.h"
 #include "joystick.h"
 #include "tsukuba_time.h"

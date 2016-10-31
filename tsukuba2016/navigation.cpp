@@ -1,9 +1,199 @@
+//つくばチャレンジ2016用プログラム
+//誘導関連のプログラム
+//
 #include"navigation.h"
 
-
-static double ramuda=1.0;
-
 using namespace std;
+
+static double lambda=1.0;
+matrix ret_mat;
+
+
+vectar blh2ecef(double phi, double ramda, double height)
+/* 緯度,経度,高さからECEF座標に変換 */
+{
+	vectar ecef;
+
+	ecef.n = 3;
+	ecef.a[0] = (NN(phi)+height)*cos(phi*PI/180)*cos(ramda*PI/180);
+	ecef.a[1] = (NN(phi)+height)*cos(phi*PI/180)*sin(ramda*PI/180);
+	ecef.a[2] = (NN(phi)*(1-E2)+height)*sin(phi*PI/180);
+
+	return ecef;
+}
+
+vectar ecef2blh(vectar ec)
+/* ECEF座標からWGS84の{緯度,経度,楕円体高}へ変換 */
+{
+	vectar blh;
+	int i = 0;
+	double phi, ramda, height, p; 
+	double x, y, z;
+	double sita;
+
+	ec.n = 3; blh.n = 3;
+	x = ec.a[0], y = ec.a[1], z = ec.a[2];
+
+	p = sqrt(x*x + y*y);
+	sita = (180/PI) * atan2(z*AAA, p*BBB);
+
+/*--- 緯度 */
+	phi = (180/PI) * atan2(z+ED2*BBB*(CUB(sin(sita*PI/180))),(p-E2*AAA*(CUB(cos(sita*PI/180)))));	
+
+/*--- 経度 */
+	ramda = (180/PI) * atan2(y,x);
+
+/*--- 高さ */	
+	height = (p / cos(phi*PI/180)) - NN(phi);   
+
+	blh.a[0] = phi; blh.a[1] = ramda; blh.a[2] = height;
+	return blh;
+}
+
+matrix rotx(double sita)
+/* x軸回りのsita度の回転変換：右ねじの方向 */
+{
+	matrix rota;
+	rota.n = rota.m = 3;
+
+	rota.a[0][0] = 1;
+	rota.a[0][1] = 0;
+	rota.a[0][2] = 0;
+	
+	rota.a[1][0] = 0;
+	rota.a[1][1] = cos(sita*PI/180.0);
+	rota.a[1][2] = sin(sita*PI/180.0);
+		
+	rota.a[2][0] = 0;
+	rota.a[2][1] = -sin(sita*PI/180.0);
+	rota.a[2][2] = cos(sita*PI/180.0);
+	
+	return rota;
+}
+
+matrix roty(double sita)
+{
+	matrix rota;
+	rota.n = rota.m = 3;
+		
+	rota.a[0][0] = cos(sita*PI/180.0);
+	rota.a[0][1] = 0;
+	rota.a[0][2] = -sin(sita*PI/180.0);
+	
+	rota.a[1][0] = 0;
+	rota.a[1][1] = 1;
+	rota.a[1][2] = 0;
+		
+	rota.a[2][0] = sin(sita*PI/180.0);
+	rota.a[2][1] = 0;
+	rota.a[2][2] = cos(sita*PI/180.0);
+
+	return rota;
+}
+	
+matrix rotz(double sita)
+{
+	matrix rota;
+	rota.n = rota.m = 3;
+	
+	rota.a[0][0] = cos(sita*PI/180.0);
+	rota.a[0][1] = sin(sita*PI/180.0);
+	rota.a[0][2] = 0;
+	
+	rota.a[1][0] = -sin(sita*PI/180.0);
+	rota.a[1][1] = cos(sita*PI/180.0);
+	rota.a[1][2] = 0;
+		
+	rota.a[2][0] = 0;
+	rota.a[2][1] = 0;
+	rota.a[2][2] = 1;
+	
+	return rota;
+}
+
+vectar matvec(matrix inmat, vectar v1)
+/*--- 行列とベクトルの積 */
+{
+	int i, j;
+	vectar ret_v;
+
+	for (i=0;i<MAXN;i++) ret_v.a[i]=0.0;
+	ret_v.err = 0;
+	if((inmat.n>MAXN)||(inmat.n<0)||(inmat.m>MAXN)||(inmat.m<0))
+		ret_v.err=1;
+	if((v1.n > MAXN) || (v1.n<0)) ret_v.err=1;
+	if((v1.n) != (inmat.m)) ret_v.err=1;
+	if(ret_v.err == 1){ ret_v.n=0; return ret_v; }
+	ret_v.n=inmat.n;
+	for (i=0;i<inmat.n;i++){
+		for (j=0;j<inmat.m;j++) ret_v.a[i] = ret_v.a[i] + inmat.a[i][j] * v1.a[j];
+	}
+	return ret_v;
+}
+
+matrix matmat(matrix *m1, matrix *m2)
+/*--- 行列の積 */
+{
+	int i, j, k, mcount;
+
+   ret_mat.err = 0;
+   if ((m1->n>MAXN)||(m1->n<0)||(m1->m>MAXN)||(m1->m<0)) ret_mat.err=1;
+   if ((m2->n>MAXN)||(m2->n<0)||(m2->m>MAXN)||(m2->m<0)) ret_mat.err=1;
+
+   if  ((m1->m) != (m2->n))  ret_mat.err=1;
+   mcount = m1->m;
+   if (ret_mat.err == 1){
+      strcpy(ret_mat.message,"Something went wrong.");
+			printf("Something went wrong!\n");
+      ret_mat.n = 0;
+      ret_mat.m = 0;
+      return ret_mat; 
+   }
+
+   ret_mat.n = m1->n;
+   ret_mat.m = m2->m;
+
+   for (i=0;i<ret_mat.n;i++)  {
+      for (j=0;j<ret_mat.m;j++) ret_mat.a[i][j]=0.0;
+   }
+
+   for (i=0;i<ret_mat.n;i++){
+      for (j=0;j<ret_mat.m;j++){
+	 			for (k=0;k<mcount;k++){
+	    		ret_mat.a[i][j] += m1->a[i][k] * m2->a[k][j] ;
+	 			}
+      }
+   }
+   return ret_mat;
+}
+
+vectar ecef2enu(vectar dest, vectar origin)
+/*--- ECEF座標を水平線座標(ENU)へ変換する */ 
+{
+	int i, j;
+	vectar mov, ret, blh;
+	matrix rotyp, rotzp1, rotzp2;
+	matrix mat_conv1, mat_conv2;
+
+	origin.n  = 3;		origin.err  = 0;	
+	mov.n 	  = 3;		mov.err     = 0; 
+	ret.n 	  = 3; 	ret.err     = 0;
+
+	blh = ecef2blh(origin);
+
+	rotzp1 = rotz(90.0);
+	rotyp  = roty(90.0 - blh.a[0]);
+	rotzp2 = rotz(blh.a[1]);
+
+	mat_conv1 = matmat(&rotzp1, &rotyp);
+	mat_conv2 = matmat(&mat_conv1, &rotzp2);
+
+	for(i=0;i<3;i++) mov.a[i] = dest.a[i] - origin.a[i];
+	ret = matvec(mat_conv2, mov);
+	return ret;
+}
+
+
 
 int navigation(void)
 	{	
@@ -12,22 +202,35 @@ int navigation(void)
 
 //void move(double latitude,double latitude_goal,double longitude,double longitude_goal,float *omega)
 void move(robot_t *IH){
-	float wide=602;
-	float n=1.0;
+//関数名がmoveでは英語の意味から何をしようとしているかわからなくなる可能性があるので
+//以下の機能はnavigation()の方に移します。
+//それに伴ってメイン関数を修正しました。(2016.10.30 ITO)
+
+
+  double wide=602.0;
+	double n=1.0;
 	double h=0.5;
-	double ramuda0;	
-	float omega1;
-	ramuda0=ramuda;
-	ramuda=atan(IH->lon_goal-IH->lon/IH->lat_goal-IH->lat);
+	double lambda_old;	
+	double omega1;
+  double lat,lon,high,x,y,xt,yt;
+
+
+
+
+#if 0
+  //以下の計算は平面座標系に変換されていないので正しくありません。（2016.10.31 ITO）
+	lambda_old=lambda;
+	lambda=atan(IH->lon_goal-IH->lon/IH->lat_goal-IH->lat);
 	if(change_waypoint()==0)
 		{
-		IH->motor_o=n*(ramuda-ramuda0)/h;
+		IH->motor_o = n*(lambda - lambda_old)/h;
 		}
-	IH->motor_v=0.5;
+	IH->motor_v = 0.5;
 	cout<<"omega="<<IH->motor_o<<endl;
 /*
 	V_left=v+omega*wide/2;			
 	V_right=v-omega*wide/2;
 */
+#endif
 
 }
