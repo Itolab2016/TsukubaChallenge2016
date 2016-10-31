@@ -17,13 +17,8 @@
 
 #define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 
-
 #define SAVE_IMG "/home/itolab/Desktop/1028sasai/test_img/"
 
-
-#define READ1 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
-#define READ2 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
-#define READ3 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
 
 /*カメラ情報*/
 #define CAMERA 440.9741,0,290.2624,0,443.2639,242.4028,0,0,1

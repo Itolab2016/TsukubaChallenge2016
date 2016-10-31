@@ -46,19 +46,11 @@ vector<double> takasawaydata;
 
 char file[]=GPSDATA;
 
-char read1[]=READ1;
-char read2[]=READ2;
-char read3[]=READ3;
 
 //txtに書き出し
 
 ofstream GPSmanualidokeido(file); //manual
 
-
-//txt読み込み
-ifstream latifs(read1);
-ifstream lonifs(read2);
-ifstream takasaifs(read3);
 
 int open_TKK(void){
 
