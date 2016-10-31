@@ -9,6 +9,7 @@ static double lambda=1.0;
 matrix ret_mat;
 double xt_old;
 double yt_old;
+double lat, lon, hig, lat_o, lon_o, hig_o;
 
 vectar blh2ecef(double phi, double ramda, double height)
 /* 緯度,経度,高さからECEF座標に変換 */
@@ -196,17 +197,6 @@ vectar ecef2enu(vectar dest, vectar origin)
 
 int set_waypoint(void){
 
-	copy(istream_iterator<double>(latifs), istream_iterator<double>(),back_inserter(latwaydata));
-	copy(istream_iterator<double>(lonifs), istream_iterator<double>(),back_inserter(lonwaydata));
-	copy(istream_iterator<double>(takasaifs), istream_iterator<double>(),back_inserter(takasawaydata));
-
-	lat_o=latwaydata[p];
-	lon_o=lonwaydata[p];
-	hig_o=takasawaydata[p];
-	
-
-	printf("%lf %lf %lf\n",lat_o,lon_o,hig_o);
-	p++;
 }
 
 int change_waypoint(void){
