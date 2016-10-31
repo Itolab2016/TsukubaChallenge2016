@@ -90,6 +90,7 @@ int main(){
       //2Hzループ
       if(on2Hz()==1)
       {
+	time_stamp(&robo);
         capture(save_photo);  //画像撮影
         get_navi_data(&robo); //
         get_urg_data(&robo);  //
@@ -127,6 +128,7 @@ int main(){
 
       if(on100Hz()==1)
       {
+	time_stamp(&robo);
         get_urg_data(&robo);  //LIDER(URG)のデータ取得
         //avoid_decide();     //未完成
         get_navi_data(&robo); //モーションセンサーから航法データ取得

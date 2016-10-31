@@ -69,7 +69,7 @@ int on2Hz(void){		//0.5秒(Lt)経った時1を返す
 	else return 0;
 }
 
-int save(robot_t *IH){
+int time_stamp(robot_t *IH){
 	get_time();
 	IH->time=Kt;
 	return 0;
