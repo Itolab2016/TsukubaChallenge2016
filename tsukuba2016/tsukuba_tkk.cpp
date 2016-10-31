@@ -44,10 +44,7 @@ vector<double> latwaydata;
 vector<double> lonwaydata;
 vector<double> takasawaydata;
 
-char file3[]=DATA3;
-char file4[]=DATA4;
-char file5[]=DATA5;
-char file6[]=DATA6;
+char file[]=GPSDATA;
 
 char read1[]=READ1;
 char read2[]=READ2;
@@ -55,10 +52,8 @@ char read3[]=READ3;
 
 //txtに書き出し
 
-ofstream GPSmanualidokeido(file3); //manual
-ofstream GPSido(file4);		
-ofstream GPSkeido(file5);
-ofstream GPStakasa(file6);
+ofstream GPSmanualidokeido(file); //manual
+
 
 //txt読み込み
 ifstream latifs(read1);
@@ -506,18 +501,6 @@ int save_wp(void){
 		printf("緯度2=%lf 経度2=%lf 高度=%lf \n",ido3,keido3,takasa2);
 
 
-		//緯度データをtxt化
-		sprintf(str,"%lf ",ido3);
-		GPSido<<str<<endl;
-
-		//経度データをtxt化
-		sprintf(str,"%lf ",keido3);
-		GPSkeido<<str<<endl;
-		
-		//高度データをtxt化
-		sprintf(str,"%lf ",takasa2);
-		GPStakasa<<str<<endl;
-
 		//緯度経度データをtxt化
 		sprintf(str,"%d\t%lf\t%lf\t%d",Counter2++,ido3,keido3,k);
 		GPSmanualidokeido<<str<<endl;
@@ -529,37 +512,6 @@ int save_wp(void){
 
 }
 
-int set_waypoint(void){
-
-	copy(istream_iterator<double>(latifs), istream_iterator<double>(),back_inserter(latwaydata));
-	copy(istream_iterator<double>(lonifs), istream_iterator<double>(),back_inserter(lonwaydata));
-	copy(istream_iterator<double>(takasaifs), istream_iterator<double>(),back_inserter(takasawaydata));
-
-	lat_o=latwaydata[p];
-	lon_o=lonwaydata[p];
-	hig_o=takasawaydata[p];
-	
-
-	printf("%lf %lf %lf\n",lat_o,lon_o,hig_o);
-	p++;
-}
-
-int change_waypoint(void){
-
-		vectar ecef, ecef_o, enu;
-
-		ecef = blh2ecef(lat, lon, hig);
-		ecef_o = blh2ecef(lat_o, lon_o, hig_o);
-		enu = ecef2enu(ecef, ecef_o);		
-
-		if(enu.a[0]<=0.5 && enu.a[1]<=0.5){
-			set_waypoint();
-			return 1;
-		}
-	
-
-		return 0;
-}
 
 
 
