@@ -29,5 +29,5 @@ int capture2 (char *save_point,robot_t *IH);
 static int capture0 (char *save_point);
 static void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Point2f>& points2, vector<uchar>& status);
 static void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keypoints_1);
-int sfm(char *save_point,char *save_point_data,double scale);
+int sfm(char *save_point,robot_t *IH);
 #endif

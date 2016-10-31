@@ -131,8 +131,8 @@ static void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keyp
 }
 
 
-int sfm(char *save_point,char *save_point_data,double scale){
-
+int sfm(char *save_point,robot_t *IH){
+	scale=IH->scale;
 	double focal=(K.at<float>(0,0)+K.at<float>(1,1))/2;//焦点距離（本番カメラ）
 	Point2d pp(K.at<float>(0,2), K.at<float>(1,2));//中心座標(本番カメラ)
 
