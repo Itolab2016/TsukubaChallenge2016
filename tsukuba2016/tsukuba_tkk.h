@@ -25,6 +25,6 @@ int open_TKK(void);			//TKKデバイスをオープン
 
 int get_navi_data(robot_t *tkk);		//航法データをファイルに記録
 
-int save_wp(void);			//wpとなる緯度経度を記録
+int save_wp(robot_t *tkk);			//wpとなる緯度経度を記録
 
 #endif

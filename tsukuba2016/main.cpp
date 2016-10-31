@@ -102,7 +102,7 @@ int main(){
       //WP記録
       if(button==13/*MARU*/){
         //save(FILE_TIME,way,way_time);
-        save_wp();
+        save_wp(&robo);
         cout<<"way_get"<<endl;
       }
     }

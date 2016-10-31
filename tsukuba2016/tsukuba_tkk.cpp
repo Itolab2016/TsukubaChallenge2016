@@ -356,8 +356,6 @@ int get_navi_data(robot_t *tkk){
 		
 		tkk->scale=scale;
 
-		tkk->lat_goal=lat_o;
-		tkk->lon_goal=lon_o;	
 
 
 	//	printf("緯度1=%lf 経度1=%lf 高さ1=%lf\n",ido3,keido3,takasa2);
@@ -369,7 +367,7 @@ int get_navi_data(robot_t *tkk){
 }
 
 
-int save_wp(void){
+int save_wp(robot_t *tkk){
 
 	int i,t,k=1;
 	int kouho=0,INS=0;
@@ -489,6 +487,9 @@ int save_wp(void){
 
 		keido3=keido3/(10*10*10*10*10*10*10*10*10);
 		keido3=keido3/10;
+
+		tkk->lat_goal=ido3;
+		tkk->lon_goal=keido3;	
 
 		printf("緯度2=%lf 経度2=%lf 高度=%lf \n",ido3,keido3,takasa2);
 
