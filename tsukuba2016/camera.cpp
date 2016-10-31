@@ -58,7 +58,7 @@ int capture (robot_t *IH)
 	frameNo++;
 	sprintf(str,"%s%04d.png",save_point,frameNo);
         imwrite(str, frame);
-	sprintf(IH->image,"%d",frameNo);
+	sprintf(IH->image,"%04d.png",frameNo);
 	
 }
 
@@ -72,7 +72,7 @@ int capture2 (robot_t *IH)
 	}
 	sprintf(str,"%s%04d.png",save_point,frameNo);
         imwrite(str, frame1);
-	sprintf(IH->image,"%d",frameNo);
+	sprintf(IH->image,"%04d.png",frameNo);
 	frameNo++;
 
 }
