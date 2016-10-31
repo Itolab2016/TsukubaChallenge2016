@@ -2,11 +2,11 @@
  
 static double Dt,Kt,Ut,Lt,Init_time1,Init_time2,Init_time3;
 static unsigned long Previoustime, Currenttime;
-static char timedata1[]=LOGFILE;
-static char timedata2[255];
-static char timedata3[255];
-static char timedata4[255];
-static ofstream fs(timedata1);
+//static char timedata1[]=LOGFILE;
+//static char timedata2[255];
+//static char timedata3[255];
+//static char timedata4[255];
+static ofstream fs(LOGFILE);
 
 static struct timeval Tv;
 
@@ -75,22 +75,34 @@ int time_stamp(robot_t *IH){
 	return 0;
 }
 
+
 int log(robot_t *IH){
-	sprintf(timedata2,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%d,%d,%lf,%lf,%d,%s,%lf,%lf,",
-	IH->time,IH->lat,IH->lon,IH->vx,IH->vy,IH->vz,IH->accelx,
-	IH->accely,IH->accelz,IH->angx,IH->angy,IH->angvx,IH->angvy,IH->angvz,IH->height,
-	IH->tbearing,IH->scale,IH->motor_l,IH->motor_r,IH->motor_v,
-	IH->motor_o,IH->mode,IH->image,IH->lat_goal,IH->lon_goal);
-	fs<<timedata2;
+  char str[1024];
+	sprintf(
+              str, 
+             "%lf,%lf,%lf,%lf,%lf,"
+             "%lf,%lf,%lf,%lf,%lf,"
+             "%lf,%lf,%lf,%lf,%lf,"
+             "%lf,%lf,%d,%d,%lf,"
+             "%lf,%d,%s,%lf,%lf,",
+
+              IH->time, IH->lat, IH->lon, IH->vx, IH->vy,
+              IH->vz, IH->accelx, IH->accely, IH->accelz, IH->angx,
+              IH->angy, IH->angvx, IH->angvy, IH->angvz, IH->height,
+              IH->tbearing, IH->scale, IH->motor_l, IH->motor_r, IH->motor_v,
+              IH->motor_o,IH->mode,IH->image,IH->lat_goal,IH->lon_goal
+  );//<--sprintf終わり
+
+	fs<<str;
 
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
-		sprintf(timedata3,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
-		fs<<timedata3;
-		}
+		sprintf(str,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
+		fs<<str;
+	}
 	for (int i=0;i<(sizeof IH->urg_pt/sizeof (int));i++){
-		sprintf(timedata4,"%d,",IH->urg_pt[i]);
-		fs<<timedata4;
-		}
+		sprintf(str,"%d,",IH->urg_pt[i]);
+		fs<<str;
+  }
 
 	fs<<endl;
 	//fs.close();
@@ -101,7 +113,10 @@ int fs_close(void){
 	fs.close();
 	}
 
+
 int read_log(char *save_point,char *name,robot_t *IH){
+
+#if 0
 	FILE *fp;
 	char *p;
 	char buf[200000]={0};
@@ -119,7 +134,7 @@ int read_log(char *save_point,char *name,robot_t *IH){
 	while(fgets(buf,200000,fp)){
 	
 	printf("%s\n",buf);
-#if 1
+
 	p=strtok(buf,",");
 	ary[0]=p;
 	data[0]=atof(ary[0]);
@@ -158,10 +173,10 @@ int read_log(char *save_point,char *name,robot_t *IH){
 
 			else break;
 			i++;
-#endif
+
 		}
 	}
-#if 1
+
 	IH->time=data[0];
 	IH->lat=data[1];
 	IH->lon=data[2];
@@ -186,11 +201,12 @@ int read_log(char *save_point,char *name,robot_t *IH){
 	IH->mode=data[21];
 	IH->lat_goal=data[22];
 	IH->lon_goal=data[23];
+	}
 
 #endif
-	}	
+
 }
-		
+
 
 
 

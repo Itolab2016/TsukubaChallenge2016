@@ -26,8 +26,8 @@ using namespace cv;
 int camera_open(void);
 int capture (robot_t *IH);
 int capture2 (robot_t *IH);
-static int capture0 (char *save_point);
-static void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Point2f>& points2, vector<uchar>& status);
-static void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keypoints_1);
+int capture0 (char *save_point);
+void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Point2f>& points2, vector<uchar>& status);
+void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keypoints_1);
 int sfm(char *save_point,robot_t *IH);
 #endif

@@ -14,11 +14,12 @@
 
 /*txt保存 読み込み*/
 #define LOGFILE "/home/itolab/Desktop/1029TUKUBA2/data/test.log"
+//#define LOGFILE "test.log"
 
 #define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 
 #define SAVE_IMG "/home/itolab/Desktop/1029TUKUBA2/data/"
-
+//#define SAVE_IMG "data/"
 
 /*カメラ情報*/
 #define CAMERA 440.9741,0,290.2624,0,443.2639,242.4028,0,0,1
