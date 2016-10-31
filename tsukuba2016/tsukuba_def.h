@@ -1,8 +1,6 @@
 #ifndef TSUKUBA_DEF_H
 #define TSUKUBA_DEF_H
 
-//using namespace std;
-
 /*デバイス設定*/
 #define TKK "/dev/SERIAL_TKK"
 #define TKK_BAUD_RATE    B921600              // RS232C通信ボーレート
