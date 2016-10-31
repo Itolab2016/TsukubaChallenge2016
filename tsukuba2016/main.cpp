@@ -98,7 +98,11 @@ int main(){
 
       //WP記録
       if(button==13/*MARU*/){
+<<<<<<< HEAD
         time_stamp(&robo);
+=======
+        //save(FILE_TIME,way,way_time);
+>>>>>>> a6e4fa174c47a9dc71c6327cf0ff74b7c761cb79
         save_wp(&robo);
         cout<<"way_get"<<endl;
       }
