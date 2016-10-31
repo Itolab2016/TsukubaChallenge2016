@@ -17,7 +17,7 @@
 
 #define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 
-#define SAVE_IMG "/home/itolab/Desktop/1028sasai/test_img/"
+#define SAVE_IMG "/home/itolab/Desktop/1029TUKUBA2/data/"
 
 
 /*カメラ情報*/

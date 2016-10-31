@@ -54,10 +54,9 @@ int capture (robot_t *IH)
 {
 	
 	cap >> frame;
-
 	//フレーム画像を保存する．
 	frameNo++;
-	sprintf(str,"%s%04d%s.png",save_point,frameNo);
+	sprintf(str,"%s%04d.png",save_point,frameNo);
         imwrite(str, frame);
 	sprintf(IH->image,"%d",frameNo);
 	
