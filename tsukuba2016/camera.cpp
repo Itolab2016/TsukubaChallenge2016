@@ -1,8 +1,5 @@
 #include "camera.h"
 
-#define SAVE "/home/ubuntu/Desktop/img/"
-#define CAMERA 440.9741,0,290.2624,0,443.2639,242.4028,0,0,1
-#define DISTORTION -0.39703,0.14661,0.001369,-0.0075874,-0.016642
 
 
 
@@ -14,9 +11,9 @@ int fRet;
 static Mat frame,frame1,frame2;
 static int open=40;
 static int frameNo=0;
-static char str[255];//フレーム画像保存用
+static char str[80];//フレーム画像保存用
 static VideoCapture cap(0);
-static char file[]=;
+static char save_point[]=SAVE_IMG;
 static Mat R_f= Mat::eye(3, 3, CV_64FC1);//回転合計
 static Mat t_f= Mat::zeros(3, 1, CV_64FC1);//並進合計
 static char filename1[100];//3次元復元画像1
@@ -63,7 +60,7 @@ static int capture0 (char *save_point)
 */
 }
 
-int capture (char *save_point,robot_t *IH)
+int capture (robot_t *IH)
 {
 	
 	cap >> frame;
@@ -72,12 +69,13 @@ int capture (char *save_point,robot_t *IH)
 	frameNo++;
 	sprintf(str,"%s%04d%s.png",save_point,frameNo);
         imwrite(str, frame);
-	IH->image=frameNo;
+	sprintf(str,"%d",frameNo);
+	IH->image=str;
 	
 }
 
 
-int capture2 (char *save_point,robot_t *IH)
+int capture2 (robot_t *IH)
 {
 
 	frame2=frame1.clone();
@@ -86,8 +84,9 @@ int capture2 (char *save_point,robot_t *IH)
 	}
 	sprintf(str,"%s%04d.png",save_point,frameNo);
         imwrite(str, frame1);
+	sprintf(str,"%d",frameNo);
 	frameNo++;
-	IH->image=frameNo;
+	IH->image=str;
 }
 
 
@@ -136,10 +135,6 @@ int sfm(char *save_point,robot_t *IH){
 	double focal=(K.at<float>(0,0)+K.at<float>(1,1))/2;//焦点距離（本番カメラ）
 	Point2d pp(K.at<float>(0,2), K.at<float>(1,2));//中心座標(本番カメラ)
 
-/*
-	sprintf(filename1, "%s%04d.png",save_point,frameNo-1);
-	sprintf(filename2, "%s%04d.png",save_point,frameNo);
-*/
 
 try {	
 	//比較用画像を読み込む 
@@ -262,15 +257,7 @@ try {
 	//3次元座標にする
 	convertPointsFromHomogeneous(point4Dh.reshape(4,1),point3D);
 
-/*	カメラのみの場合使用
-	//原点からの座標に変換
-	for(int i=0;point3D.size()>i;i++)
-	{
-		point3D[i].x=point3D[i].x-t_f.at<double>(0);
-		point3D[i].y=point3D[i].y-t_f.at<double>(1);
-		point3D[i].z=point3D[i].z-t_f.at<double>(2);
-	}
-*/
+
 	//総移動量計算
 	t_f = t_f + R_f*t;
 	R_f = R*R_f;
@@ -284,20 +271,6 @@ try {
 	}
 	pointme.push_back(Point3f(t_f));
 
-
-	//txtに書き込む
-	char data[255];
-	sprintf(data,"%s3Ddata%04d.txt",save_point_data,frameNo-1);
-	char ddata[255];
-	ofstream fs(data);
-
-	for(int i=0;i<point3D.size();i++)
-	{
-		sprintf(ddata,"%lf %lf %lf",point3D[i].x,point3D[i].y,point3D[i].z);
-		fs<<ddata<<endl;
-	}
-	fRet=0;
-	fs.close();
 }
 catch(int fError){
 	fRet=fError;

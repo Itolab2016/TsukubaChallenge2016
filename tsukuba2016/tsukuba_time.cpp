@@ -2,7 +2,7 @@
  
 static double Dt,Kt,Ut,Lt,Init_time1,Init_time2,Init_time3;
 static unsigned long Previoustime, Currenttime;
-static char timedata1[]=SAVEDATA;
+static char timedata1[]=LOGFILE;
 static char timedata2[255];
 static char timedata3[255];
 static char timedata4[255];

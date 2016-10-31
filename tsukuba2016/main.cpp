@@ -13,9 +13,8 @@
 #include "tsukuba_def.h"
 
 
-#define SAVE_PHOTO "/home/itolab/Desktop/1028sasai/test_img/"
-#define SAVE_TXT "/home/itolab/Desktop/1028sasai/test_txt/"
-//#define SAVE_CAMERA_TXT "/home/ubuntu/Desktop/data/"
+
+
 #define FILE_TIME "/media/ubuntu/Transcend/1027data/"
 
 using namespace std; 
@@ -121,7 +120,7 @@ int main(){
                     {
                     localization();//未完成
                     axis_trarnsform();//未完成
-                    sfm(save_photo,save_txt,scale);
+                    sfm(save_photo,&robo);
                     }*/
         count++;
       }

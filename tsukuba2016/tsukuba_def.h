@@ -13,19 +13,21 @@
 
 
 /*txt保存 読み込み*/
-#define SAVE IMG"/home/ubuntu/Desktop/img/"
 #define LOGFILE "/media/ubuntu/itolab/log/test.log"
 
 #define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 
 
-#define SAVE_PHOTO "/home/itolab/Desktop/1028sasai/test_img/"
+#define SAVE_IMG "/home/itolab/Desktop/1028sasai/test_img/"
 
 
 #define READ1 "/media/ubuntu/itolab/1030data/latitude_goal.txt"
 #define READ2 "/media/ubuntu/itolab/1030data/longitude_goal.txt"
 #define READ3 "/media/ubuntu/itolab/1030data/takasa_goal.txt"
 
+/*カメラ情報*/
+#define CAMERA 440.9741,0,290.2624,0,443.2639,242.4028,0,0,1
+#define DISTORTION -0.39703,0.14661,0.001369,-0.0075874,-0.016642
 
 typedef struct{
 
