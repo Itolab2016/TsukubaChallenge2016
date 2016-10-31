@@ -13,7 +13,7 @@
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test.log"
+#define LOGFILE "/home/itolab/Desktop/1029TUKUBA2/data/test.log"
 
 #define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
 

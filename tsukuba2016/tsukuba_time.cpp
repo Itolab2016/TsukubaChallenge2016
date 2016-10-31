@@ -82,6 +82,7 @@ int log(robot_t *IH){
 	IH->tbearing,IH->scale,IH->motor_l,IH->motor_r,IH->motor_v,
 	IH->motor_o,IH->mode,IH->image,IH->lat_goal,IH->lon_goal);
 	fs<<timedata2;
+
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
 		sprintf(timedata3,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
 		fs<<timedata3;
@@ -90,6 +91,7 @@ int log(robot_t *IH){
 		sprintf(timedata4,"%d,",IH->urg_pt[i]);
 		fs<<timedata4;
 		}
+
 	fs<<endl;
 	//fs.close();
 	return 0;
