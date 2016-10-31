@@ -78,10 +78,9 @@ int motor_close(void){
 }
 
 int motor_remote(robot_t *IH){
-	float v=IH->motor_v;
-	float omega=IH->motor_o;
-	v=get_joy_stickY()*MAX_V;
-	omega=-get_joy_stickX()*MAX_OMEGA;
+
+	IH->motor_v=get_joy_stickY()*MAX_V;
+	IH->motor_o=-get_joy_stickX()*MAX_OMEGA;
 }
 
 int motor_command(robot_t *IH){
