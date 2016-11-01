@@ -103,7 +103,6 @@ int motor_command(robot_t *IH){
 	if ( R < 100.0 ) {
 		R = 100.0;
 	}
-
 	serial(fd_L,buf1,str1,L);
 	serial(fd_R,buf2,str2,R);
 	IH->motor_l=L;

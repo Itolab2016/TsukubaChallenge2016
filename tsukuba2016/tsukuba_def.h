@@ -11,14 +11,14 @@
 #define SERIAL_PORT1 "/dev/MOTOR_R"
 #define SERIAL_PORT2 "/dev/MOTOR_L" 
 
-#define LIDER "/dev/ttyACM0"
+#define LIDER "/dev/SERIAL_URG"
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test1101_1210.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1101_1830.log"
 //#define LOGFILE "test.log"
 
-#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido.txt"
+#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1101_1830.txt"
 
 #define SAVE_IMG "/media/ubuntu/itolab/log/img/"
 //#define SAVE_IMG "data/"

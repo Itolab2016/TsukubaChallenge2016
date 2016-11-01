@@ -222,10 +222,10 @@ int navigation(robot_t *robo)
 
 {	
   double wide=602.0;
-	double n=1.0;
-	double h=0.5;
-	double lambda_old;	
-	double omega1;
+  double n=1.0;
+  double h=0.5;
+ 	double lambda_old;	
+  	double omega1;
   double lat,lon,high,x,y;
   double lat_g, lon_g;
   double xt,yt;
@@ -251,7 +251,7 @@ int navigation(robot_t *robo)
   
   //======== 比例航法 ========
   //比例航法は参考文献
-  
+  robo->motor_o=n*(xt*((yt-yt_old)/h)-yt*((xt-xt_old)/h))/(pow(xt,2.0)+pow(yt,2.0));
   
   
   //終了前に現在の値を記憶する（数値微分のため）

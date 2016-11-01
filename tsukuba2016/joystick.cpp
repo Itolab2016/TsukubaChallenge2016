@@ -46,7 +46,7 @@ float joy_read (void)
 }
 float get_joy_stickX (void)
 {
-	//read ( joy_fd , &js , sizeof ( js_event ) );
+//	read ( joy_fd , &js , sizeof ( js_event ) );
 	switch ( js.type & ~JS_EVENT_INIT ) {
 		case JS_EVENT_AXIS:
 			joy_axis[( int )js.number] = js.value;
@@ -61,7 +61,7 @@ float get_joy_stickX (void)
 
 float get_joy_stickY (void)
 {
-	//read ( joy_fd , &js , sizeof ( js_event ) );
+//	read ( joy_fd , &js , sizeof ( js_event ) );
 	switch ( js.type & ~JS_EVENT_INIT ) {
 		case JS_EVENT_AXIS:
 			joy_axis[( int )js.number] = js.value;

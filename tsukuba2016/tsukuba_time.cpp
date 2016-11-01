@@ -1,7 +1,7 @@
 #include "tsukuba_time.h"
  
 static double Dt,Kt,Ut,Lt,Init_time1,Init_time2,Init_time3;
-static unsigned long Previoustime, Currenttime;
+static unsigned long long Previoustime, Currenttime;
 //static char timedata1[]=LOGFILE;
 //static char timedata2[255];
 //static char timedata3[255];
@@ -42,7 +42,7 @@ double get_time(void){		//絶対時刻(Kt)を返す
 	Kt=(Currenttime-Init_time1)/1000000.0;
 	Ut=(Currenttime-Init_time2)/1000000.0;
 	Lt=(Currenttime-Init_time3)/1000000.0;
-	//printf("%f\n",Kt);
+//	printf("%f\n",Kt);
 	return Kt;
 
 }
@@ -61,7 +61,7 @@ int on100Hz(void){		//0.01秒(Ut)経った時1を返す
 
 int on2Hz(void){		//0.5秒(Lt)経った時1を返す
 	get_time();
-//	printf("%f\n",Lt);
+//	printf("%f\n",Kt);
 	if(Lt>=0.5){
 		Init_time3=Currenttime;
 		return 1;
@@ -77,8 +77,7 @@ int time_stamp(robot_t *IH){
 
 
 int log(robot_t *IH){
-  char str[1024]; //整形文字列格納用変数（大きさに注意）
-  
+  char str[1024]; //整形文字列格納用変数（大きさに注意） 
 	sprintf(
               str, 
              "%lf,%lf,%lf,%lf,%lf,"
