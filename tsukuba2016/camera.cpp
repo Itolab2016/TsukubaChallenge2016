@@ -1,8 +1,5 @@
 #include "camera.h"
 
-
-
-
 using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;
@@ -44,7 +41,7 @@ int camera_open(void)
 	}
 }
 
-static int capture0 (char *save_point)
+int capture0 (char *save_point)
 {	
 	Mat frame0;
 	cap >> frame0;
@@ -78,7 +75,7 @@ int capture2 (robot_t *IH)
 }
 
 
-static void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Point2f>& points2, vector<uchar>& status)	{ 
+void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Point2f>& points2, vector<uchar>& status)	{ 
 
 //this function automatically gets rid of points for which tracking fails
 
@@ -106,7 +103,7 @@ static void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vect
      }
 
 }
-static void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keypoints_1){
+void SURFdesu(Mat img_1, vector<Point2f>& points1, vector<KeyPoint>& keypoints_1){
 //大きいほど厳しい
  int minHessian = 400;
  Ptr<cv::xfeatures2d::SURF> detector = SURF::create( minHessian );

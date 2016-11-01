@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include <fstream>
 #include "tsukuba_urg.h"
+#include "tsukuba_def.h"
 
 #define SAVEPOINT "urg_data.txt"
-#define MEASURMENTANGLE 180.0
+#define MEASURMENTANGLE 270.0
 
 using namespace std;
 using namespace qrk;
@@ -50,7 +51,7 @@ int open_URG(void)
 
   long baudrate=115200;    
   Urg_driver::connection_type_t c_type=Urg_driver::Serial;
-  char device[]="/dev/ttyACM0";
+  char device[]=LIDER;
 
   if ( !urg.open(device, baudrate, c_type) ) {
     cout << "Urg_driver::open() error"<< endl;

@@ -77,7 +77,8 @@ int time_stamp(robot_t *IH){
 
 
 int log(robot_t *IH){
-  char str[1024];
+  char str[1024]; //整形文字列格納用変数（大きさに注意）
+  
 	sprintf(
               str, 
              "%lf,%lf,%lf,%lf,%lf,"
@@ -91,6 +92,7 @@ int log(robot_t *IH){
               IH->angy, IH->angvx, IH->angvy, IH->angvz, IH->height,
               IH->tbearing, IH->scale, IH->motor_l, IH->motor_r, IH->motor_v,
               IH->motor_o,IH->mode,IH->image,IH->lat_goal,IH->lon_goal
+  
   );//<--sprintf終わり
 
 	fs<<str;

@@ -11,6 +11,8 @@
 #define SERIAL_PORT1 "/dev/MOTOR_R"
 #define SERIAL_PORT2 "/dev/MOTOR_L" 
 
+#define LIDER "/dev/ttyACM0"
+
 
 /*txt保存 読み込み*/
 #define LOGFILE "/home/itolab/Desktop/1029TUKUBA2/data/test.log"
@@ -51,7 +53,6 @@ typedef struct {
 	point3d_t img_pt[2000];		//14.カメラ点群
 	unsigned int urg_pt[1081];	//15.URG点群	
 	double lat_goal,lon_goal;
-	
 
 } robot_t;
 
