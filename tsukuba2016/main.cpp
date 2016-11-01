@@ -1,6 +1,21 @@
 //つくばチャレンジ2016用プログラム
 //メイン関数
 //
+//======== Memo ========
+//SSDのUUID="96da4cce-7db5-406d-b155-5f14b50e49fb"
+//
+// SSDを起動時にマウントするためには
+// /etc/fstabファイルに以下の情報を記述する
+/*
+UUID="96da4cce-7db5-406d-b155-5f14b50e49fb" /media/ubuntu/itolab ext4 defaults 0 0
+
+
+*/
+//
+//
+//
+//
+
 #include "motor.h"
 #include "joystick.h"
 #include "tsukuba_time.h"
