@@ -15,12 +15,12 @@
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/home/itolab/Desktop/1029TUKUBA2/data/test.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1101_1210.log"
 //#define LOGFILE "test.log"
 
-#define GPSDATA "/media/ubuntu/itolab/1030data/manualidokeido.txt"
+#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido.txt"
 
-#define SAVE_IMG "/home/itolab/Desktop/1029TUKUBA2/data/"
+#define SAVE_IMG "/media/ubuntu/itolab/log/img/"
 //#define SAVE_IMG "data/"
 
 /*カメラ情報*/
