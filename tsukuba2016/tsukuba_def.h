@@ -15,7 +15,7 @@
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test1102_2020.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1102_2100.log"
 //#define LOGFILE "test.log"
 
 #define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1102_0130.txt"

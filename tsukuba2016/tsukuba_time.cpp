@@ -109,15 +109,15 @@ int log(robot_t *IH){
   
   );//<--sprintf終わり
 
-	fs<<str;
-#if 0
+	fs<<str<<flush;
+#if 1 
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
 		sprintf(str,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
-		fs<<str;
+		//fs<<str<<flush;
 	}
 	for (int i=0;i<(sizeof IH->urg_pt/sizeof (int));i++){
 		sprintf(str,"%d,",IH->urg_pt[i]);
-		fs<<str;
+		//fs<<str<<flush;
   }
 #endif
 	fs<<endl;
@@ -222,42 +222,3 @@ int read_log(char *save_point,char *name,robot_t *IH){
 #endif
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
