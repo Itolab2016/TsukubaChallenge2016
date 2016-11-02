@@ -252,7 +252,7 @@ int navigation(robot_t *robo)
   //======== 比例航法 ========
   //比例航法は参考文献
   robo->motor_o=n*(xt*((yt-yt_old)/h)-yt*((xt-xt_old)/h))/(pow(xt,2.0)+pow(yt,2.0));
-  
+  robo->motor_v=0.5;
   
   //終了前に現在の値を記憶する（数値微分のため）
   xt_old = xt;

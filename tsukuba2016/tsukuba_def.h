@@ -15,10 +15,10 @@
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test1101_1830.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1102_2020.log"
 //#define LOGFILE "test.log"
 
-#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1101_1830.txt"
+#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1102_0130.txt"
 
 #define SAVE_IMG "/media/ubuntu/itolab/log/img/"
 //#define SAVE_IMG "data/"

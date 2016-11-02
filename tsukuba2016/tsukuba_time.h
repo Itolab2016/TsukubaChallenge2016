@@ -15,6 +15,7 @@ using namespace std;
 
 int on100Hz(void);		//0.01秒経った時1を返す
 int on2Hz(void);		//0.5秒経った時1を返す
+int motor_50Hz(void);
 
 double get_delta_time(void);	//時刻差を返す
 double get_time(void);		//絶対時刻を返す

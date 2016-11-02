@@ -1,6 +1,6 @@
 #include "tsukuba_time.h"
  
-static double Dt,Kt,Ut,Lt,Init_time1,Init_time2,Init_time3;
+static double Dt,Kt,Ut,Lt,Motor,Init_time,Init_time_100Hz,Init_time_2Hz,Init_time_motor;
 static unsigned long long Previoustime, Currenttime;
 //static char timedata1[]=LOGFILE;
 //static char timedata2[255];
@@ -15,11 +15,13 @@ static struct timeval Tv;
 int reset_time(void){		//時刻をリセット
 	gettimeofday(&Tv,NULL);  
 	Previoustime = Currenttime;
-	Currenttime = 1000000 * Tv.tv_sec + Tv.tv_usec;
+	Currenttime = (unsigned long long)1000000 * Tv.tv_sec 
+		+ (unsigned long long)Tv.tv_usec;
 
-	Init_time1=Currenttime;
-	Init_time2=Currenttime;
-	Init_time3=Currenttime;
+	Init_time=Currenttime;
+	Init_time_100Hz=Currenttime;
+	Init_time_2Hz=Currenttime;
+	Init_time_motor=Currenttime;
 
 }
 
@@ -27,7 +29,8 @@ double get_delta_time(void){	//時刻差(Dt)を返す
 
 	gettimeofday(&Tv,NULL);  
 	Previoustime = Currenttime;
-	Currenttime = 1000000 * Tv.tv_sec + Tv.tv_usec;
+	Currenttime = (unsigned long long)1000000 * Tv.tv_sec 
+		+ (unsigned long long)Tv.tv_usec;
 	Dt = (Currenttime - Previoustime) / 1000000.0;
 //	printf("Dt=%06f\n",Dt);
 	return Dt;
@@ -38,10 +41,12 @@ double get_time(void){		//絶対時刻(Kt)を返す
 
 	gettimeofday(&Tv,NULL);  
 	Previoustime = Currenttime;
-	Currenttime = 1000000 * Tv.tv_sec + Tv.tv_usec;
-	Kt=(Currenttime-Init_time1)/1000000.0;
-	Ut=(Currenttime-Init_time2)/1000000.0;
-	Lt=(Currenttime-Init_time3)/1000000.0;
+	Currenttime = (unsigned long long)1000000 * Tv.tv_sec 
+		+ (unsigned long long)Tv.tv_usec;
+	Kt=(Currenttime-Init_time)/1000000.0;
+	Ut=(Currenttime-Init_time_100Hz)/1000000.0;
+	Lt=(Currenttime-Init_time_2Hz)/1000000.0;
+	Motor=(Currenttime-Init_time_motor)/1000000.0;
 //	printf("%f\n",Kt);
 	return Kt;
 
@@ -52,7 +57,7 @@ int on100Hz(void){		//0.01秒(Ut)経った時1を返す
 	get_time();
 //	printf("%f\n",Ut);
 	if(Ut>=0.01){
-		Init_time2=Currenttime;
+		Init_time_100Hz=Currenttime;
 		return 1;
 	}
 	else return 0;
@@ -63,8 +68,18 @@ int on2Hz(void){		//0.5秒(Lt)経った時1を返す
 	get_time();
 //	printf("%f\n",Kt);
 	if(Lt>=0.5){
-		Init_time3=Currenttime;
+		Init_time_2Hz=Currenttime;
 		return 1;
+	}
+	else return 0;
+}
+
+int motor_50Hz(void){
+	get_time();
+	if(Motor>=0.02){
+		Init_time_motor=Currenttime;
+		return 1;
+
 	}
 	else return 0;
 }
@@ -95,7 +110,7 @@ int log(robot_t *IH){
   );//<--sprintf終わり
 
 	fs<<str;
-
+#if 0
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
 		sprintf(str,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
 		fs<<str;
@@ -104,7 +119,7 @@ int log(robot_t *IH){
 		sprintf(str,"%d,",IH->urg_pt[i]);
 		fs<<str;
   }
-
+#endif
 	fs<<endl;
 	//fs.close();
 	return 0;
