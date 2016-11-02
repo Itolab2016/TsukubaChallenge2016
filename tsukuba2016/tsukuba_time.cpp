@@ -113,11 +113,11 @@ int log(robot_t *IH){
 #if 1 
 	for(int i=0;i<(sizeof IH->img_pt/sizeof (double))/3;i++){
 		sprintf(str,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
-		//fs<<str<<flush;
+		fs<<str<<flush;
 	}
 	for (int i=0;i<(sizeof IH->urg_pt/sizeof (int));i++){
 		sprintf(str,"%d,",IH->urg_pt[i]);
-		//fs<<str<<flush;
+		fs<<str<<flush;
   }
 #endif
 	fs<<endl;

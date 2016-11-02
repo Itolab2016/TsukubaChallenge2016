@@ -139,10 +139,11 @@ int main(){
         //	c++;
         //printf("ok ");
         //fflush(stdout);
-        time_stamp(&robo);
-        log(&robo);
+        //time_stamp(&robo);
+        //log(&robo);
         //==================================================
         printf("%lf\n",get_time());
+        log(&robo);	  //状態ロギング
 
 
 
@@ -150,10 +151,9 @@ int main(){
 
         //=================================================
       }
-      //motor_remote(&robo);  //
-      //motor_command(&robo); //
-      // log(&robo);	  //状態ロギング
-      // }
+      motor_remote(&robo);  //
+      motor_command(&robo); //
+      
 
       //WP記録
       if(button==13/*MARU*/){
