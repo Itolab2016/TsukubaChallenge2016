@@ -17,7 +17,7 @@
 
 //ログデータ1行の要素数(2以上)
 #define COL 10
-
+	
 
 int main(void){
     FILE *fp ;
@@ -60,6 +60,7 @@ int main(void){
       data8[index] = atof(ary[c++]);
       strcpy(data9[index],ary[c++]);
       //data9[index] = ary[c++];
+
 
       printf("%d\n",index);
       printf("%d,%d,%d,%d,%d,%f,%f,%f,%f,%s",
