@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 //ログデータ1行の文字数の最大値（大きめに）
 #define MAX 100000
@@ -26,7 +26,7 @@ int main(void){
 
     int data0[ROW],data1[ROW],data2[ROW],data3[ROW],data4[ROW];
     double data5[ROW],data6[ROW],data7[ROW],data8[ROW];
-    char *data9[ROW];
+    char data9[ROW][256];
 
 
     if((fp=fopen("test.log","r"))==NULL){
@@ -48,6 +48,7 @@ int main(void){
 
       /*文字列(char配列)をdoubleに変換する*/
       int c=0;
+      char *p;
       data0[index] = atoi(ary[c++]);
       data1[index] = atoi(ary[c++]);
       data2[index] = atoi(ary[c++]);
@@ -57,14 +58,18 @@ int main(void){
       data6[index] = atof(ary[c++]);
       data7[index] = atof(ary[c++]);
       data8[index] = atof(ary[c++]);
-      data9[index] = ary[c++];
+      strcpy(data9[index],ary[c++]);
+      //data9[index] = ary[c++];
 
+      printf("%d\n",index);
       printf("%d,%d,%d,%d,%d,%f,%f,%f,%f,%s",
         data0[index],data1[index],data2[index],data3[index],data4[index],
         data5[index],data6[index],data7[index],data8[index],data9[index]
       );
-
+      index++;
     }
+
+    printf("Using Sample after reading loop finished=%s\n",data9[8]);
 
     return 0;
 }
