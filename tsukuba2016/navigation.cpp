@@ -224,8 +224,8 @@ int navigation(robot_t *robo)
   double wide=602.0;
   double n=1.0;
   double h=0.5;
- 	double lambda_old;	
-  	double omega1;
+  double lambda_old;	
+  double omega1;
   double lat,lon,high,x,y;
   double lat_g, lon_g;
   double xt,yt;

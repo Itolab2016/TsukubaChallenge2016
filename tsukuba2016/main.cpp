@@ -34,15 +34,9 @@
 
 using namespace std; 
 //=========================================
-
-
-timeval t;
-unsigned long il,l;
-unsigned long long ill,ll,old=0;
-
-
-
-
+//timeval t;
+//unsigned long il,l;
+//unsigned long long ill,ll,old=0;
 //========================================
 
 
@@ -63,25 +57,23 @@ int main(){
   int button;
   vector<float> way_time;
   vector<float> auto_time;
-#if 0
-  //  camera_open();
+#if 1
+  camera_open();
   motor_open();
   joy_open();
   open_TKK();
   cout<<"TKK_open"<<endl;
-  //  open_URG();
+  open_URG();
   cout<<"URG_open"<<endl;
 #endif
-  //========================================
 
-  gettimeofday(&t,NULL);
+  //========================================
+  //gettimeofday(&t,NULL);
   //printf("%ld,%ld\n",t.tv_sec,t.tv_usec);
-  il = (unsigned long)t.tv_sec*1000000 + (unsigned long)t.tv_usec;
-  ill= (unsigned long long)t.tv_sec*1000000 + (unsigned long long)t.tv_usec;
-
-
-
+  //il = (unsigned long)t.tv_sec*1000000 + (unsigned long)t.tv_usec;
+  //ill= (unsigned long long)t.tv_sec*1000000 + (unsigned long long)t.tv_usec;
   //========================================
+
   reset_time();
   //cout<<"Start !"<<endl;
 
@@ -126,9 +118,10 @@ int main(){
       if(on2Hz()==1)
       {
         //printf("%lf\n",get_time());
-        //      capture(&robo);  //画像撮影
-        //  get_navi_data(&robo); //
-        //     get_urg_data(&robo);  //
+        get_time();
+        capture(&robo);       //画像撮影
+        get_navi_data(&robo); //
+        get_urg_data(&robo);  //
       }
       //100Hzループ
       if(on100Hz()==1){
@@ -139,16 +132,12 @@ int main(){
         //	c++;
         //printf("ok ");
         //fflush(stdout);
-        //time_stamp(&robo);
-        //log(&robo);
+        time_stamp(&robo);
+        log(&robo);
+
         //==================================================
-        printf("%lf\n",get_time());
-        log(&robo);	  //状態ロギング
-
-
-
-
-
+        //printf("%lf\n",get_time());
+        //log(&robo);	  //状態ロギング
         //=================================================
       }
       motor_remote(&robo);  //
@@ -162,35 +151,32 @@ int main(){
         save_wp(&robo);
         cout<<"way_get"<<endl;
       }
-
-
   }
+
   //======== 自律モード ========
   else if(robo.mode==AUTO_RUN){
     if(on2Hz()==1)
     {
       /*	capture2(&robo);
-
           if(count!=0)
           {
           localization();//未完成
-          axis_trarnsform();//未完成
           sfm(save_photo,&robo);
           }*/
+      get_urg_data(&robo);  //LIDER(URG)のデータ取得
+      avoid_decide();     //未完成
+      navigation(&robo);    //比例航法
       count++;
     }
 
     if(on100Hz()==1)
     {
       time_stamp(&robo);
-      //  get_urg_data(&robo);  //LIDER(URG)のデータ取得
-      //avoid_decide();     //未完成
       get_navi_data(&robo); //モーションセンサーから航法データ取得
-      //move(&robo);
-      navigation(&robo);    //比例航法
-      motor_command(&robo); //モータへ司令
       log(&robo);           //ログ記録
     }
+    motor_command(&robo); //モータへ司令
+
     if(button==3/*START*/)
     {
       cout<<"break"<<endl;
