@@ -11,7 +11,9 @@ int count_button[17];
 float x;
 float y;
 int L,R;
+
 js_event js;
+
 int joy_open(void)
 {
 	if ( ( joy_fd = open( JOY_DEV, O_RDONLY ) ) < 0 ) 
@@ -43,49 +45,33 @@ int joy_open(void)
 float joy_read (void)
 {
 	read ( joy_fd , &js , sizeof ( js_event ) );
-}
-float get_joy_stickX (void)
-{
-//	read ( joy_fd , &js , sizeof ( js_event ) );
 	switch ( js.type & ~JS_EVENT_INIT ) {
 		case JS_EVENT_AXIS:
 			joy_axis[( int )js.number] = js.value;
-			return -joy_axis[0]/32768.0;//MAX32768.0 m/s 
+			//return -joy_axis[0]/32768.0;//MAX32768.0 m/s 
 			break;
 		case JS_EVENT_BUTTON:
 			joy_button[( int )js.number] = js.value;
-			return 0;//( int )js.number;
+			//return 0;//( int )js.number;
 			break;
 	}
+}
+
+float get_joy_stickX (void)
+{
+			return -joy_axis[0]/32768.0;//MAX32768.0 m/s 
 }
 
 float get_joy_stickY (void)
 {
-//	read ( joy_fd , &js , sizeof ( js_event ) );
-	switch ( js.type & ~JS_EVENT_INIT ) {
-		case JS_EVENT_AXIS:
-			joy_axis[( int )js.number] = js.value;
 			return -joy_axis[1]/32768.0;
-			break;
-		case JS_EVENT_BUTTON:
-			joy_button[( int )js.number] = js.value;
-			return 0;//( int )js.number;
-			break;
-	}
 }
 
 int get_joy_button (void)
 {
-	//read ( joy_fd , &js , sizeof ( js_event ) );
-		switch ( js.type & ~JS_EVENT_INIT ) {
-			case JS_EVENT_BUTTON:
-				if(js.value==1){
-					joy_button[( int )js.number] = js.value;
-					return ( int )js.number;
-					break;
-				}
-				else return 0;
-	}
 }
 
+int shikaku(void){
+  return joy_button[15];
+}
 
