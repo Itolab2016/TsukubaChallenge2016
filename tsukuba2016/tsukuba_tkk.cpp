@@ -45,11 +45,17 @@ vector<double> lonwaydata;
 vector<double> takasawaydata;
 
 char file[]=GPSDATA;
+char file2[]=GPSDATA2;
+char file3[]=GPSDATA3;
+char file4[]=GPSDATA4;
 
 
 //txtに書き出し
 
 ofstream GPSmanualidokeido(file); //manual
+ofstream GPSido(file2); //manual
+ofstream GPSkeido(file3); //manual
+ofstream GPStakasa(file4); //manual
 
 
 int open_TKK(void){
@@ -493,6 +499,18 @@ int save_wp(robot_t *tkk){
 
 		printf("緯度2=%lf 経度2=%lf 高度=%lf \n",ido3,keido3,takasa2);
 
+
+		//緯度データをtxt化
+		sprintf(str,"%lf ",ido3);
+		GPSido<<str<<endl;
+
+		//経度データをtxt化
+		sprintf(str,"%lf ",keido3);
+		GPSkeido<<str<<endl;
+		
+		//高度データをtxt化
+		sprintf(str,"%lf ",takasa2);
+		GPStakasa<<str<<endl;
 
 		//緯度経度データをtxt化
 		sprintf(str,"%d\t%lf\t%lf\t%d",Counter2++,ido3,keido3,k);

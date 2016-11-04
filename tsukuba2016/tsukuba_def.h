@@ -19,6 +19,13 @@
 #define READLOG "/home/syouyu/デスクトップ/kouhou_test"
 
 #define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1102_0130.txt"
+#define GPSDATA2 "/media/ubuntu/itolab/log/latitude_goal.txt"
+#define GPSDATA3 "/media/ubuntu/itolab/log/longitude_goal.txt.txt"
+#define GPSDATA4 "/media/ubuntu/itolab/log/takasa_goal.txt"
+
+#define READDATA1 "/media/ubuntu/itolab/log/latitude_goal.txt"
+#define READDATA2 "/media/ubuntu/itolab/log/longitude_goal.txt"
+#define READDATA3 "/media/ubuntu/itolab/log/ltakasa_goal.txt"
 
 #define SAVE_IMG "/media/ubuntu/itolab/log/img/"
 //#define SAVE_IMG "data/"
