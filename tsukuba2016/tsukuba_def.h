@@ -15,10 +15,10 @@
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test1102_2100.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1104_1100.log"
 #define READLOG "/home/syouyu/デスクトップ/kouhou_test"
 
-#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1102_0130.txt"
+#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1104_1100.txt"
 #define GPSDATA2 "/media/ubuntu/itolab/log/latitude_goal.txt"
 #define GPSDATA3 "/media/ubuntu/itolab/log/longitude_goal.txt.txt"
 #define GPSDATA4 "/media/ubuntu/itolab/log/takasa_goal.txt"

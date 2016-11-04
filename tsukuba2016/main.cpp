@@ -58,7 +58,7 @@ int main(){
   vector<float> way_time;
   vector<float> auto_time;
 #if 1
-  camera_open();
+//  camera_open();
   motor_open();
   joy_open();
   open_TKK();
@@ -75,15 +75,15 @@ int main(){
   //========================================
 
   reset_time();
-  //cout<<"Start !"<<endl;
+  cout<<"Start !"<<endl;
 
-  robo.mode=MANUAL_RUN;//WAITi;
+  robo.mode=WAIT;//WAITi;
 
   //Main loop
   while(1){
     count=0;
-    //joy_read();
-    //button=get_joy_button ();
+    joy_read();
+    button=get_joy_button ();
 
     //モード分岐
 
@@ -117,9 +117,9 @@ int main(){
       //2Hzループ
       if(on2Hz()==1)
       {
-        //printf("%lf\n",get_time());
+//        printf("%lf\n",get_time());
         get_time();
-        capture(&robo);       //画像撮影
+//        capture(&robo);       //画像撮影
         get_navi_data(&robo); //
         get_urg_data(&robo);  //
       }
