@@ -17,7 +17,7 @@ int joy_open(void)
 	if ( ( joy_fd = open( JOY_DEV, O_RDONLY ) ) < 0 ) 
 	{
 		printf( "Failed to open %s" ,JOY_DEV );
-		//cerr << "Failed to open " << JOY_DEV << endl;
+		cerr << "Failed to open " << JOY_DEV << endl;
 		exit(1);
 		return -1;
 	}
@@ -39,56 +39,41 @@ int joy_open(void)
 
 }
 
-int dummy_open(){
-	joy_button.resize( 17 , 0 );
-	joy_axis.resize( 29 , 0 );
-}
 
-void joy_read (void)
+float joy_read (void)
 {
 	read ( joy_fd , &js , sizeof ( js_event ) );
-	switch ( js.type & ~JS_EVENT_INIT ) {
-		case JS_EVENT_AXIS:
-			joy_axis[( int )js.number] = js.value;
-			break;
-		case JS_EVENT_BUTTON:
-			joy_button[( int )js.number] = js.value;
-			break;
-	}
 }
 float get_joy_stickX (void)
 {
-	return -joy_axis[0]/32768.0;
+//	read ( joy_fd , &js , sizeof ( js_event ) );
+	switch ( js.type & ~JS_EVENT_INIT ) {
+		case JS_EVENT_AXIS:
+			joy_axis[( int )js.number] = js.value;
+			return -joy_axis[0]/32768.0;//MAX32768.0 m/s 
+			break;
+		case JS_EVENT_BUTTON:
+			joy_button[( int )js.number] = js.value;
+			return 0;//( int )js.number;
+			break;
+	}
 }
 
 float get_joy_stickY (void)
-	{
-	return -joy_axis[1]/32768.0;
+{
+//	read ( joy_fd , &js , sizeof ( js_event ) );
+	switch ( js.type & ~JS_EVENT_INIT ) {
+		case JS_EVENT_AXIS:
+			joy_axis[( int )js.number] = js.value;
+			return -joy_axis[1]/32768.0;
+			break;
+		case JS_EVENT_BUTTON:
+			joy_button[( int )js.number] = js.value;
+			return 0;//( int )js.number;
+			break;
+	}
 }
 
-
-int start(void){
-	return joy_button[3];
-}
-
-
-int sikaku(void){
-	return joy_button[15];
-}
-
-
-int maru(void){
-	return joy_button[13];
-}
-
-int sankaku(void){
-	return joy_button[12];
-}
-
-int batu(void){
-	return joy_button[14];
-}
-/*
 int get_joy_button (void)
 {
 	//read ( joy_fd , &js , sizeof ( js_event ) );
@@ -103,4 +88,4 @@ int get_joy_button (void)
 	}
 }
 
-*/
+

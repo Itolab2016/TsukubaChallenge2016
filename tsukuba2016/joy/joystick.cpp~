@@ -39,10 +39,6 @@ int joy_open(void)
 
 }
 
-int dummy_open(){
-	joy_button.resize( 17 , 0 );
-	joy_axis.resize( 29 , 0 );
-}
 
 void joy_read (void)
 {
@@ -86,7 +82,7 @@ int sankaku(void){
 }
 
 int batu(void){
-	return joy_button[14];
+	return joy_button[15];
 }
 /*
 int get_joy_button (void)

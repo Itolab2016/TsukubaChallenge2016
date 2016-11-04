@@ -58,13 +58,18 @@ int main(){
   vector<float> way_time;
   vector<float> auto_time;
 #if 1
-//  camera_open();
-  motor_open();
-  joy_open();
-  open_TKK();
-  cout<<"TKK_open"<<endl;
-  open_URG();
-  cout<<"URG_open"<<endl;
+  camera_open();
+  //motor_open();
+  //joy_open();
+  dummy_open();
+  //open_TKK();
+  //cout<<"TKK_open"<<endl;
+  //open_URG();
+//    system("aplay -q /home/ubuntu/Desktop/voice/urg.wav");
+//    system("aplay -q /home/ubuntu/Desktop/voice/open.wav");
+    
+
+  //cout<<"URG_open"<<endl;
 #endif
 
   //========================================
@@ -75,41 +80,41 @@ int main(){
   //========================================
 
   reset_time();
-  cout<<"Start !"<<endl;
+//  cout<<"Start !"<<endl;
 
-  robo.mode=WAIT;//WAITi;
+  robo.mode=MANUAL_RUN;//WAITi;
 
   //Main loop
   while(1){
     count=0;
-    joy_read();
-    button=get_joy_button ();
+    //joy_read();
+//    button=get_joy_button ();
 
     //モード分岐
 
     //======== 待機モード ========
     if(robo.mode==WAIT){
 
-      if(button==15/*SHIKAKU*/){			//手動走行に変更
+      if(sikaku()==1/*SHIKAKU*/){			//手動走行に変更
         robo.mode=MANUAL_RUN;
         reset_time();
         cout<<"data_pick_mode"<<endl;
       }
 
-      else if(button==12/*SANKAKU*/){	//自立走行に変更
+      else if(sankaku()==1/*SANKAKU*/){	//自立走行に変更
         robo.mode=AUTO_RUN;
         set_waypoint();
         reset_time();
       }
 
-      else if(button==14/*BATU*/)break;//終了
+      else if(batu()==1/*BATU*/)break;//終了
 
     }
 
     //======== 手動モード ========
     else if(robo.mode==MANUAL_RUN){
 
-      if(button==3/*START*/)
+      if(start()==1/*START*/)
       {
         cout<<"break"<<endl;
         robo.mode=WAIT;
@@ -117,14 +122,17 @@ int main(){
       //2Hzループ
       if(on2Hz()==1)
       {
-//        printf("%lf\n",get_time());
-        get_time();
-//        capture(&robo);       //画像撮影
-        get_navi_data(&robo); //
-        get_urg_data(&robo);  //
+        //  get_time();
+        capture(&robo);       //画像撮影
+        //get_navi_data(&robo); //
+        //get_urg_data(&robo);  //
+        //printf("2Hz\n");
       }
       //100Hzループ
-      if(on100Hz()==1){
+      if(motor_50Hz()==1){
+        //motor_remote(&robo);  //
+        //motor_command(&robo); 
+        //printf("50Hz\n");
         //	if(c>1000){
         //	cout<<"ok"<<endl;
         //	c=0;
@@ -132,23 +140,24 @@ int main(){
         //	c++;
         //printf("ok ");
         //fflush(stdout);
-        time_stamp(&robo);
+//        time_stamp(&robo);
         log(&robo);
+        printf("%lf\n",get_time());
 
         //==================================================
         //printf("%lf\n",get_time());
         //log(&robo);	  //状態ロギング
         //=================================================
       }
-      motor_remote(&robo);  //
-      motor_command(&robo); //
+   //   motor_remote(&robo);  //
+   //   motor_command(&robo); //
       
 
       //WP記録
-      if(button==13/*MARU*/){
+      if(maru()==1/*MARU*/){
 
         time_stamp(&robo);
-        save_wp(&robo);
+      //  save_wp(&robo);
         cout<<"way_get"<<endl;
       }
   }
@@ -177,7 +186,7 @@ int main(){
     }
     motor_command(&robo); //モータへ司令
 
-    if(button==3/*START*/)
+    if(start()==1/*START*/)
     {
       cout<<"break"<<endl;
       robo.mode=WAIT;

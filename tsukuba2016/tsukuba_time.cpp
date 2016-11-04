@@ -1,5 +1,15 @@
 #include "tsukuba_time.h"
  
+//ログデータ1行の文字数の最大値（大きめに）
+#define MAX 100000
+
+//ログデータの行数
+#define ROW 10000
+
+//ログデータ1行の要素数(2以上)
+#define COL 25+1081
+
+static char save_point[]=READLOG;
 static double Dt,Kt,Ut,Lt,Motor,Init_time,Init_time_100Hz,Init_time_2Hz,Init_time_motor;
 static unsigned long long Previoustime, Currenttime;
 //static char timedata1[]=LOGFILE;
@@ -130,95 +140,81 @@ int fs_close(void){
 	}
 
 
-int read_log(char *save_point,char *name,robot_t *IH){
+int read_log(robot_t *IH,int *frame){
+    FILE *fp ;
+    char buf[MAX]={0};
+    char *ary[COL] ;
+    int n=24;
+    char logname[256];
+    long urg_index=1081;
 
-#if 0
-	FILE *fp;
+    double data[n][ROW];
+    char data9[ROW][256];
+    //long data2[urg_index][ROW];
+    sprintf(logname,"%s",save_point);
+    if((fp=fopen(logname,"r"))==NULL){
+      printf("File open errpr !\n");
+      exit(1);
+    }
+     int index=0;
+    /*ファイルの終わりまで繰り返し読み込む*/
+    while( fgets(buf,MAX,fp) != NULL ){
+      /*文字列(char配列)をカンマで分割する*/
+      for(int i=0; i < COL; i++){
+        if(i==0) ary[i] = strtok(buf,",");
+        else ary[i] = strtok(NULL,",");
+        //printf("%s\n",ary[i]);
+      }
+	int c=0;
 	char *p;
-	char buf[200000]={0};
-	char filename[100];
-	char *ary[24];
-	double data[24]={0};
-	int i=1;
-	int k=0;
-	int j=0;
-	int l=0;
-	int camera=(sizeof IH->img_pt/sizeof (double))+23;
-	int urg=camera+(sizeof IH->urg_pt/sizeof (int));
-	sprintf(filename,"%s%s.csv",save_point,name);
-	if((fp=fopen(filename,"r"))!=NULL){
-	while(fgets(buf,200000,fp)){
-	
-	printf("%s\n",buf);
-
-	p=strtok(buf,",");
-	ary[0]=p;
-	data[0]=atof(ary[0]);
-	while(1){
-			p=strtok(NULL,",");
-			if(i<24){
-				ary[i]=p;
-				data[i]=atof(ary[i]);
+	for(int i=0;i<n;i++){
+		if(i==17||i==18||i==21){	
+			data[i][index]=atoi(ary[c++]);
 		
-			}
-			else if(i==24){
-				sprintf(IH->image,"%s",p);
-		
-			}
-			else if(i<camera){
-				if(j==0){
-					IH->img_pt[k].x=atof(p);
-					j=1;
-					}
-				else if(j==1){
-					IH->img_pt[k].y=atof(p);
-					j=2;
-					}
-				else if(j==2){
-					IH->img_pt[k].z=atof(p);
-					j=0;
-					k++;
-					}
-				}
-			else if(i<urg){
-					IH->urg_pt[l]=atoi(p);
-					l++;
-				}			
-
-
-
-			else break;
-			i++;
-
 		}
+		else{
+			data[i][index]=atof(ary[c++]);
+			}
+	
+	}
+	strcpy(data9[index],ary[c++]);
+
+	for(int j=0;j<urg_index;j++){
+			IH->urg_pt[j]=atoi(ary[c++]);
 	}
 
-	IH->time=data[0];
-	IH->lat=data[1];
-	IH->lon=data[2];
-	IH->vx=data[3];
-	IH->vy=data[4];
-	IH->vz=data[5];
-	IH->accelx=data[6];
-	IH->accely=data[7];
-	IH->accelz=data[8];
-	IH->angx=data[9];
-	IH->angy=data[10];
-	IH->angvx=data[11];
-	IH->angvy=data[12];
-	IH->angvz=data[13];
-	IH->height=data[14];
-	IH->tbearing=data[15];
-	IH->scale=data[16];
-	IH->motor_l=data[17];
-	IH->motor_r=data[18];
-	IH->motor_v=data[19];
-	IH->motor_o=data[20];
-	IH->mode=data[21];
-	IH->lat_goal=data[22];
-	IH->lon_goal=data[23];
-	}
 
-#endif
+	   if(index==*frame)break;
+      index++;
+    }
+    
+    
+	IH->time=data[0][index];
+	IH->lat=data[1][index];
+	IH->lon=data[2][index];
+	IH->vx=data[3][index];
+	IH->vy=data[4][index];
+	IH->vz=data[5][index];
+	IH->accelx=data[6][index];
+	IH->accely=data[7][index];
+	IH->accelz=data[8][index];
+	IH->angx=data[9][index];
+	IH->angy=data[10][index];
+	IH->angvx=data[11][index];
+	IH->angvy=data[12][index];
+	IH->angvz=data[13][index];
+	IH->height=data[14][index];
+	IH->tbearing=data[15][index];
+	IH->scale=data[16][index];
+	IH->motor_l=data[17][index];
+	IH->motor_r=data[18][index];
+	IH->motor_v=data[19][index];
+	IH->motor_o=data[20][index];
+	IH->mode=data[21][index];
+	IH->lat_goal=data[22][index];
+	IH->lon_goal=data[23][index];
+	sprintf(IH->image,"%s",data9[index]);			
 
+
+    return 0;
 }

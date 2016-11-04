@@ -30,7 +30,6 @@
 
 using namespace std;
 int joy_open(void);
-int dummy_open(void);
 
 int get_joy_button (void);
 void joy_read (void);

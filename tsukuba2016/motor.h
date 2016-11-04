@@ -27,13 +27,13 @@
 #include <sysexits.h>
 #include <string.h>
 #include "tsukuba_def.h"
-
+#include "joystick.h"
 using namespace std;
 
 
 
 static void serial_init(int fd);
-static void serial(int fd,char* buf,char* str,int send);
+static void serial(int fd, int send);
 int motor_open(void);
 int motor_close(void);
 int motor_command(robot_t *IH);

@@ -39,10 +39,6 @@ int joy_open(void)
 
 }
 
-int dummy_open(){
-	joy_button.resize( 17 , 0 );
-	joy_axis.resize( 29 , 0 );
-}
 
 void joy_read (void)
 {

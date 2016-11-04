@@ -1,5 +1,5 @@
 #include"motor.h"
-#include "joystick.h"
+//#include "joystick.h"
 #include "tsukuba_time.h"
 
 using namespace std;
@@ -25,14 +25,11 @@ static void serial_init(int fd)
   tcsetattr(fd,TCSANOW,&tio);
 }
 
-static void serial(int fd,char* buf,char* str,int send){
-    if(fd<0){
-	cout<<"no"<<endl;
-	exit(1);
-	}
-    sprintf(str, "%d\r", send);
-    strcpy(buf,str);
-    write(fd, buf , sizeof(buf));
+static void serial(int fd,int send){
+  char str[5];
+  int len=sprintf(str, "%d\r", send);
+  tcflush(fd,TCOFLUSH);
+  write(fd, str ,len );
 }
 
 
@@ -88,6 +85,8 @@ int motor_command(robot_t *IH){
 	float v=IH->motor_v;
 	float omega=IH->motor_o;	
 
+//  return 0;
+
 	L=( ( v - omega ) + 1.0 )*500;
 	R=( ( v + omega ) + 1.0 )*500;
 	
@@ -103,11 +102,11 @@ int motor_command(robot_t *IH){
 	if ( R < 100.0 ) {
 		R = 100.0;
 	}
-if(motor_50Hz()==1){
-	serial(fd_L,buf1,str1,L);
-	serial(fd_R,buf2,str2,R);
-	IH->motor_l=L;
+ 
+	serial(fd_L,(int)L);
+	serial(fd_R,(int)R);
+
+  IH->motor_l=L;
 	IH->motor_r=R;
-}
 		//cout<<L<<"___"<<R<<endl;
 	}

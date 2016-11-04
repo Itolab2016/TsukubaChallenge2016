@@ -10,16 +10,15 @@
 #define MAX_OMEGA 0.5 //m/s
 #define SERIAL_PORT1 "/dev/MOTOR_R"
 #define SERIAL_PORT2 "/dev/MOTOR_L" 
-//#define SERIAL_PORT1 "/dev/ttyUSB0" 
 
 #define LIDER "/dev/SERIAL_URG"
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test1104_1720.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1104_1100.log"
 #define READLOG "/home/syouyu/デスクトップ/kouhou_test"
 
-#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1104_1700.txt"
+#define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1104_1100.txt"
 #define GPSDATA2 "/media/ubuntu/itolab/log/latitude_goal.txt"
 #define GPSDATA3 "/media/ubuntu/itolab/log/longitude_goal.txt.txt"
 #define GPSDATA4 "/media/ubuntu/itolab/log/takasa_goal.txt"
