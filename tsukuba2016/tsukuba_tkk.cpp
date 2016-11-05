@@ -36,6 +36,7 @@ unsigned char *TOMAdummyangx,*TOMAdummyangy,*TOMAdummytbearing;
 int p=0;
 
 double lat, lon, hig, lat_o, lon_o, hig_o;
+double ido4=0.0,keido4=0.0,takasa3=0.0;
 
 int TKK_serial(void);
 int set_waypoint(void);
@@ -68,6 +69,7 @@ int open_TKK(void){
 		exit(1);
 	}
 	TKK_serial();
+	return 0;
 
 }
 
@@ -82,16 +84,15 @@ int TKK_serial(void){
 	cfsetospeed(&tio,TKK_BAUD_RATE);
 	// デバイスに設定を行う
 	tcsetattr(TOMAfd,TCSANOW,&tio);
-
+	
+	return 0;
 
 } 
 
 int get_navi_data(robot_t *tkk){
 
-	int i,k=1;
+	int i;
 	int kouho=0,INS=0;
-
-	char str[1024];
 
 	int takasa1;
 	int accelX,accelY,accelZ;
@@ -100,8 +101,8 @@ int get_navi_data(robot_t *tkk){
 	int angx,angy,tbearing;
 
 	long long ido1,keido1;
-	double ido3,keido3,ido4,keido4;
-	double takasa2,takasa3;
+	double ido3,keido3;
+	double takasa2;
 	float aX,aY,aZ;
 	float vx2,vy2,vz2;
 	float angvx2,angvy2,angvz2;
@@ -244,23 +245,23 @@ int get_navi_data(robot_t *tkk){
 			*TOMAdummytbearing=TOMAbuffer[kouho+i+7+37];
 
 
-			*TOMAdummyX++;
-			*TOMAdummyY++;
-			*TOMAdummyZ++;
+			(*TOMAdummyX)++;
+			(*TOMAdummyY)++;
+			(*TOMAdummyZ)++;
 
-			*TOMAdummytakasa++;
+			(*TOMAdummytakasa)++;
 
-			*TOMAdummyvx++;
-			*TOMAdummyvy++;
-			*TOMAdummyvz++;
+			(*TOMAdummyvx)++;
+			(*TOMAdummyvy)++;
+			(*TOMAdummyvz)++;
 			
-			*TOMAdummyangvx++;
-			*TOMAdummyangvy++;
-			*TOMAdummyangvz++;
+			(*TOMAdummyangvx)++;
+			(*TOMAdummyangvy)++;
+			(*TOMAdummyangvz)++;
 
-			*TOMAdummyangx++;
-			*TOMAdummyangy++;
-			*TOMAdummytbearing++;
+			(*TOMAdummyangx)++;
+			(*TOMAdummyangy)++;
+			(*TOMAdummytbearing)++;
 
 
 
@@ -272,8 +273,8 @@ int get_navi_data(robot_t *tkk){
 			*TOMAdummyido1=TOMAbuffer[kouho+i+7+41];
 			*TOMAdummykeido1=TOMAbuffer[kouho+i+7+49];
 
-			*TOMAdummyido1++;
-			*TOMAdummykeido1++;
+			(*TOMAdummyido1)++;
+			(*TOMAdummykeido1)++;
 
 
 		}
@@ -369,15 +370,15 @@ int get_navi_data(robot_t *tkk){
 
 
 	}
+		return 0;
 
 }
 
 
 int save_wp(robot_t *tkk){
 
-	int i,t,k=1;
+	int i,k=1;
 	int kouho=0,INS=0;
-	int rcounter=0;
 	int takasa1;
 
 	char str[1024];
@@ -464,7 +465,7 @@ int save_wp(robot_t *tkk){
 
 			*TOMAdummytakasa=TOMAbuffer[kouho+i+7+57];
 			
-			*TOMAdummytakasa++;		
+			(*TOMAdummytakasa)++;		
 
 		}
 
@@ -473,8 +474,8 @@ int save_wp(robot_t *tkk){
 			*TOMAdummyido2=TOMAbuffer[kouho+i+7+41];
 			*TOMAdummykeido2=TOMAbuffer[kouho+i+7+49];
 
-			*TOMAdummyido2++;
-			*TOMAdummykeido2++;
+			(*TOMAdummyido2)++;
+			(*TOMAdummykeido2)++;
 
 
 		}
@@ -519,7 +520,8 @@ int save_wp(robot_t *tkk){
 
 
 	}
-	else;
+
+		return 0;
 
 
 }

@@ -33,6 +33,8 @@ int reset_time(void){		//時刻をリセット
 	Init_time_2Hz=Currenttime;
 	Init_time_motor=Currenttime;
 
+	return 0;
+
 }
 
 double get_delta_time(void){	//時刻差(Dt)を返す
@@ -125,7 +127,7 @@ int log(robot_t *IH){
 	//	sprintf(str,"%lf,%lf,%lf,",IH->img_pt[i].x,IH->img_pt[i].y,IH->img_pt[i].z);
 		//fs<<str<<flush;
 //	}
-	for (int i=0;i<(sizeof IH->urg_pt/sizeof (int));i++){
+	for (unsigned int i=0;i<(sizeof IH->urg_pt/sizeof (int));i++){
 		sprintf(str,"%d,",IH->urg_pt[i]);
 		fs<<str<<flush;
   }
@@ -137,6 +139,7 @@ int log(robot_t *IH){
 
 int fs_close(void){
 	fs.close();
+	return 0;
 	}
 
 
@@ -166,7 +169,6 @@ int read_log(robot_t *IH,int *frame){
         //printf("%s\n",ary[i]);
       }
 	int c=0;
-	char *p;
 	for(int i=0;i<n;i++){
 		if(i==17||i==18||i==21){	
 			data[i][index]=atoi(ary[c++]);

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-static double lambda=1.0;
+//static double lambda=1.0;
 matrix ret_mat;
 double xt_old;
 double yt_old;

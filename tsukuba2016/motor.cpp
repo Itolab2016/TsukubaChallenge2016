@@ -6,11 +6,6 @@ using namespace std;
 
 static int fd_L,fd_R;
 
-static char buf1[10];
-static char str1[10];
-static char buf2[10];
-static char str2[10];
-
 
 void serial_init(int fd)
 {
@@ -32,7 +27,7 @@ void serial(int fd,int send){
   write(fd, str ,len );
 }
 
-
+/*
 static void serialA(int fd){
     if(fd<0){
 	cout<<"no"<<endl;
@@ -45,6 +40,7 @@ static void serialA(int fd){
     write(fd, bufA , sizeof(bufA));
 }
 
+
 static void serialB(int fd){
     if(fd<0){
 	cout<<"no"<<endl;
@@ -56,6 +52,7 @@ static void serialB(int fd){
     strcpy(bufB,strB);
     write(fd, bufB , sizeof(bufB));
 }
+*/
 
 int motor_open(void){
 	fd_L = open(SERIAL_PORT1,O_RDWR);
@@ -67,17 +64,22 @@ int motor_open(void){
 		exit(1);
 		return 0;
 	}
+	return 1;
 }
 
 int motor_close(void){
 	close(fd_L);
 	close(fd_R);
+	
+	return 0;
 }
 
 int motor_remote(robot_t *IH){
 
 	IH->motor_v=get_joy_stickY()*MAX_V;
 	IH->motor_o=-get_joy_stickX()*MAX_OMEGA;
+	
+	return 0;
 }
 
 int motor_command(robot_t *IH){
@@ -109,4 +111,7 @@ int motor_command(robot_t *IH){
   IH->motor_l=L;
 	IH->motor_r=R;
 		//cout<<L<<"___"<<R<<endl;
+
+	return 0;
+
 	}

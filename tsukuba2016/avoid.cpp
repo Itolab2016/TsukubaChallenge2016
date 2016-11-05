@@ -2,6 +2,7 @@
 int avoid_decide(void)
 {
 	cout<<"avoid_decide"<<endl;
+	return 0;
 }
 
 

@@ -6,15 +6,15 @@ using namespace cv::xfeatures2d;
 
 int fRet;
 static Mat frame,frame1,frame2;
-static int open=40;
+//static int open=40;
 static int frameNo=0;
 static char str[80];//フレーム画像保存用
 static VideoCapture cap(0);
 static char save_point[]=SAVE_IMG;
 static Mat R_f= Mat::eye(3, 3, CV_64FC1);//回転合計
 static Mat t_f= Mat::zeros(3, 1, CV_64FC1);//並進合計
-static char filename1[100];//3次元復元画像1
-static char filename2[100];//3次元復元画像2
+//static char filename1[100];//3次元復元画像1
+//static char filename2[100];//3次元復元画像2
 static Mat img_1, img_2;//グレー画像保存用
 //特徴抽出準備
 static vector<KeyPoint> keypoints1;
@@ -39,12 +39,15 @@ int camera_open(void)
 		exit(1);
 		return -1;
 	}
+	return 0;
 }
 
 int capture0 (char *save_point)
 {	
 	Mat frame0;
 	cap >> frame0;
+
+	return 0;
 }
 
 int capture (robot_t *IH)
@@ -57,6 +60,7 @@ int capture (robot_t *IH)
         imwrite(str, frame);
 	sprintf(IH->image,"%04d.png",frameNo);
 	
+	return 0;
 }
 
 
@@ -72,6 +76,7 @@ int capture2 (robot_t *IH)
 	sprintf(IH->image,"%04d.png",frameNo);
 	frameNo++;
 
+	return 0;
 }
 
 
@@ -89,7 +94,7 @@ void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Poin
 // 要素数を合わせる？
  //getting rid of points for which the KLT tracking failed or those who have gone outside the frame
   int indexCorrection = 0;
-  for( int i=0; i<status.size(); i++)
+  for( unsigned int i=0; i<status.size(); i++)
      {  Point2f pt = points2.at(i- indexCorrection);
      	if ((status.at(i) == 0)||(pt.x<0)||(pt.y<0))	{
      		  if((pt.x<0)||(pt.y<0))	{
@@ -164,7 +169,7 @@ try {
 
 
 	float match12_par = .5f; //対応点のしきい値
-	for (int i=0; i<knnmatch12.size(); i++)
+	for (unsigned int i=0; i<knnmatch12.size(); i++)
 	{
 		float dist1 = knnmatch12[i][0].distance;
 		float dist2 = knnmatch12[i][1].distance;
@@ -232,7 +237,7 @@ try {
 
 	//ch変更1to4(convertPointsFromHomogeneousのため)		
 	int n=0;
-	for(int i=0;i<p11.size()/*match.size()*/;i++)
+	for(unsigned int i=0;i<p11.size()/*match.size()*/;i++)
 	{
 		point4Dh.at<float>(0,n)=point4D.at<float>(0,i);
 		point4Dh.at<float>(0,n+1)=point4D.at<float>(1,i);
@@ -251,7 +256,7 @@ try {
 	//座標情報を貯める
 	vector<Point3f> point3DW;
 	vector<Point3f> pointme;
-	for(int i=0;point3D.size()>i;i++)
+	for(unsigned int i=0;point3D.size()>i;i++)
 	{
 		point3DW.push_back(point3D[i]);
 	}
