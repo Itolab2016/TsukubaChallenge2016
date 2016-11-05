@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <stdio.h>
 #include <math.h>
 #include "avoid.h"
@@ -63,14 +62,6 @@ int avoid ( int data[1080] ) {
 				flag[i][j] = 0;
 
 			}
-=======
-#include"avoid.h"
-int avoid_decide(void)
-{
-	cout<<"avoid_decide"<<endl;
-	return 0;
-}
->>>>>>> dc5af319baa651b6c76237ad51723a3cf363244f
 
 			//printf ( "i=%d,j=%d,flag[i][j]=%d\n" ,i ,j ,flag[i][j] );
 
