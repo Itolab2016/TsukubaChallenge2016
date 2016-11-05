@@ -383,7 +383,7 @@ int save_wp(robot_t *tkk){
 	char str[1024];
 
 	long long ido1,keido1;
-	double ido3,keido3,ido4,keido4,takasa2;
+	double ido3,keido3,takasa2;
 
 	float pi=3.1415926535897;
 
@@ -519,6 +519,7 @@ int save_wp(robot_t *tkk){
 
 
 	}
+	else;
 
 
 }

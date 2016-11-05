@@ -12,7 +12,7 @@ static char buf2[10];
 static char str2[10];
 
 
-static void serial_init(int fd)
+void serial_init(int fd)
 {
   struct termios tio;
   memset(&tio,0,sizeof(tio));
@@ -25,7 +25,7 @@ static void serial_init(int fd)
   tcsetattr(fd,TCSANOW,&tio);
 }
 
-static void serial(int fd,int send){
+void serial(int fd,int send){
   char str[5];
   int len=sprintf(str, "%d\r", send);
   tcflush(fd,TCOFLUSH);

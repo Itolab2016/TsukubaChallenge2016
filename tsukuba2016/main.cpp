@@ -40,21 +40,13 @@ using namespace std;
 //========================================
 
 
-
-
-
-static char way[]="way";
-static char noway[]="noway";
-
 robot_t robo;
 
 enum{WAIT,MANUAL_RUN,AUTO_RUN};
 
 int main(){
-  int c=0;
   int count=0;
-  double latitude_goal,longitude_goal;
-  int button;
+//  int button;
   vector<float> way_time;
   vector<float> auto_time;
 #if 1

@@ -32,8 +32,8 @@ using namespace std;
 
 
 
-static void serial_init(int fd);
-static void serial(int fd, int send);
+void serial_init(int fd);
+void serial(int fd, int send);
 int motor_open(void);
 int motor_close(void);
 int motor_command(robot_t *IH);
