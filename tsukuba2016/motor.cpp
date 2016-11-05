@@ -24,7 +24,10 @@ void serial(int fd,int send){
   char str[5];
   int len=sprintf(str, "%d\r", send);
   tcflush(fd,TCOFLUSH);
-  write(fd, str ,len );
+  if(write(fd, str ,len )==-1){
+    printf("Motor error !\n");
+    exit(1);
+  }
 }
 
 /*

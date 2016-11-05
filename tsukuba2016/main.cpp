@@ -27,9 +27,6 @@
 #include "localization.h"
 #include "tsukuba_def.h"
 
-
-
-
 #define FILE_TIME "/media/ubuntu/Transcend/1027data/"
 
 using namespace std; 
@@ -45,18 +42,16 @@ robot_t robo;
 enum{WAIT,MANUAL_RUN,AUTO_RUN};
 
 int main(){
-  int count=0;
 #if 1
   camera_open();
-  //motor_open();
-  //joy_open();
+  motor_open();
+  joy_open();
   dummy_open();
-  //open_TKK();
-  //cout<<"TKK_open"<<endl;
-  //open_URG();
-//    system("aplay -q /home/ubuntu/Desktop/voice/urg.wav");
-//    system("aplay -q /home/ubuntu/Desktop/voice/open.wav");
-    
+  open_TKK();
+  open_URG();
+  //    system("aplay -q /home/ubuntu/Desktop/voice/urg.wav");
+  //    system("aplay -q /home/ubuntu/Desktop/voice/open.wav");
+
 
   //cout<<"URG_open"<<endl;
 #endif
@@ -69,15 +64,16 @@ int main(){
   //========================================
 
   reset_time();
-//  cout<<"Start !"<<endl;
+  cout<<"Start !"<<endl;
+  system("aplay -q /home/ubuntu/Desktop/voice/program.wav");
 
-  robo.mode=MANUAL_RUN;//WAITi;
+  robo.mode=WAIT;
+  int count=0;
 
   //Main loop
   while(1){
-    count=0;
-    //joy_read();
-//    button=get_joy_button ();
+    //ジョイスティック読み込み
+    joy_read();
 
     //モード分岐
 
@@ -108,98 +104,84 @@ int main(){
         cout<<"break"<<endl;
         robo.mode=WAIT;
       }
-      /*2Hzループ
-      if(on2Hz()==1)
-      {
-        //  get_time();
-        capture(&robo);       //画像撮影
-        //get_navi_data(&robo); //
-        //get_urg_data(&robo);  //
-        //printf("2Hz\n");
-      }
-	*/
+      
       //100Hzループ
-      if(on100Hz()==1){
-		count++;
-	switch(count){
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 9:
-        		motor_remote(&robo);  
-        		motor_command(&robo);
-			break; 
-		case 2:
-			capture(&robo);
-			break;
-		case 4:
-			get_navi_data(&robo);
-			break;
-		case 6:
-			get_urg_data(&robo);
-			break;
-		case 10:
-			count=0;
-			break;
-	}
+      if( on100Hz() ){
+        printf("%lf",get_time());
+        printf(":Motor control.\n");
+        motor_remote(&robo);  
+        motor_command(&robo);
+
+        switch(count){
+        case 0:
+          break; 
+        case 1:
+          printf("%lf",get_time());
+          printf(":Cam capture.\n");
+          //capture(&robo);
+          break;
+        case 5:
+          printf("%lf",get_time());
+          printf(":Get navi data.\n");
+          get_navi_data(&robo);
+          break;
+        case 7:
+          printf("%lf",get_time());
+          printf(":Get URG data.\n");
+          get_urg_data(&robo);
+          break;
+        }
+        count++;
+        if(count==10)count=0;
+
         time_stamp(&robo);
         log(&robo);
-        printf("%lf\n",get_time());
-
-        //==================================================
-        //printf("%lf\n",get_time());
-        //log(&robo);	  //状態ロギング
-        //=================================================
       }
-   //   motor_remote(&robo);  //
-   //   motor_command(&robo); //
-      
 
       //WP記録
       if(maru()==1/*MARU*/){
 
         time_stamp(&robo);
-      //  save_wp(&robo);
+        //  save_wp(&robo);
         cout<<"way_get"<<endl;
       }
-  }
-
-  //======== 自律モード ========
-  else if(robo.mode==AUTO_RUN){
-    if(on2Hz()==1)
-    {
-      /*	capture2(&robo);
-          if(count!=0)
-          {
-          localization();//未完成
-          sfm(save_photo,&robo);
-          }*/
-      get_urg_data(&robo);  //LIDER(URG)のデータ取得
-      avoid_decide(&robo);     //未完成
-      navigation(&robo);    //比例航法
-      count++;
     }
 
-    if(on100Hz()==1)
-    {
-      time_stamp(&robo);
-      get_navi_data(&robo); //モーションセンサーから航法データ取得
-      log(&robo);           //ログ記録
-    }
-    motor_command(&robo); //モータへ司令
+    //======== 自律モード ========
+    else if(robo.mode==AUTO_RUN){
+      if(on2Hz()==1)
+      {
+        /*	capture2(&robo);
+            if(count!=0)
+            {
+            localization();//未完成
+            sfm(save_photo,&robo);
+            }*/
+        get_urg_data(&robo);  //LIDER(URG)のデータ取得
+        avoid_decide(&robo);     //未完成
+        navigation(&robo);    //比例航法
+        count++;
+      }
 
-    if(start()==1/*START*/)
-    {
-      cout<<"break"<<endl;
-      robo.mode=WAIT;
-    }
-  }
-}//<--while(1)に対応
+      if(on100Hz()==1)
+      {
+        time_stamp(&robo);
+        get_navi_data(&robo); //モーションセンサーから航法データ取得
+        log(&robo);           //ログ記録
+      }
+      motor_command(&robo); //モータへ司令
 
-//停止して終了
-robo.motor_v=0;
-robo.motor_o=0;
-motor_command(&robo);
-motor_close();
+      if(start()==1/*START*/)
+      {
+        cout<<"break"<<endl;
+        robo.mode=WAIT;
+      }
+    }
+  }//<--while(1)に対応
+
+  //停止して終了
+  robo.motor_v=0;
+  robo.motor_o=0;
+  motor_command(&robo);
+  motor_close();
 }	

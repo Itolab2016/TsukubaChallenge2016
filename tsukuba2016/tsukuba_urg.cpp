@@ -48,7 +48,8 @@ int open_URG(void)
   char device[]=LIDER;
   int cnt=0;
   while(!urg.open(device, baudrate, c_type)){
-    cout <<"#%02d URG open error !"<<endl;
+    printf("#%02d URG open error !\n",cnt);
+    fflush(stdout);
     cnt++;
     sleep(1);
   }
