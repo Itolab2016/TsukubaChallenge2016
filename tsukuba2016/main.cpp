@@ -46,9 +46,6 @@ enum{WAIT,MANUAL_RUN,AUTO_RUN};
 
 int main(){
   int count=0;
-//  int button;
-  vector<float> way_time;
-  vector<float> auto_time;
 #if 1
   camera_open();
   //motor_open();
@@ -111,7 +108,7 @@ int main(){
         cout<<"break"<<endl;
         robo.mode=WAIT;
       }
-      //2Hzループ
+      /*2Hzループ
       if(on2Hz()==1)
       {
         //  get_time();
@@ -120,19 +117,33 @@ int main(){
         //get_urg_data(&robo);  //
         //printf("2Hz\n");
       }
+	*/
       //100Hzループ
-      if(motor_50Hz()==1){
-        //motor_remote(&robo);  //
-        //motor_command(&robo); 
-        //printf("50Hz\n");
-        //	if(c>1000){
-        //	cout<<"ok"<<endl;
-        //	c=0;
-        //	}
-        //	c++;
-        //printf("ok ");
-        //fflush(stdout);
-//        time_stamp(&robo);
+      if(on100Hz()==1){
+		count++;
+	switch(count){
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 9:
+        		motor_remote(&robo);  
+        		motor_command(&robo);
+			break; 
+		case 2:
+			capture(&robo);
+			break;
+		case 4:
+			get_navi_data(&robo);
+			break;
+		case 6:
+			get_urg_data(&robo);
+			break;
+		case 10:
+			count=0;
+			break;
+	}
+        time_stamp(&robo);
         log(&robo);
         printf("%lf\n",get_time());
 

@@ -13,7 +13,7 @@ int avoid_decide ( robot_t *urg ) {
 	float W = 800.0;
 	float th , phi , x , y , xx , yy , tth;
 	short flag[n][181] , sflag[n] , ssflag;
-	float wth=1.570796;//目視線角
+	float wth=1.570796;	//目視線角
 
 	//フラグ初期化
 	for ( int i = 0 ; i < n ; i++ ) {
