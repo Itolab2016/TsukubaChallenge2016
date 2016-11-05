@@ -68,7 +68,7 @@ int avoid_decide ( robot_t *urg ) {
 	}
 
 	//移動方向指定
-	if ( sflag[n-1/2] == 0 ) {
+	if ( sflag[(n-1)/2] == 0 ) {
 
 		//printf ( "0:直進\n" );
 		return 0;
@@ -98,5 +98,7 @@ int avoid_decide ( robot_t *urg ) {
 		}
 
 	}
+
+	return 0;
 
 }
