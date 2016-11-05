@@ -13,6 +13,8 @@
 #include "tsukuba_tkk.h"
 #include "tsukuba_def.h"
 
+
+
 //======== 以下は座標変換関係の定数や構造体の定義やマクロです。
 /*--- 定数 */
 #define	MAXN	12
@@ -69,8 +71,9 @@ int axis_transform(void);				//座標変換
 
 //========以上が座標変換関連
 
-int set_waypoint(void);					//wpを設定
-int change_waypoint(void);
+int init_waypoint(robot_t *robo);
+int set_waypoint(robot_t *robo);					//wpを設定
+int change_waypoint(robot_t *robo);
 
 int navigation(robot_t *robo);
 int move(robot_t *IH);

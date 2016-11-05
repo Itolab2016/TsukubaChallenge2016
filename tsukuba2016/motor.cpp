@@ -88,7 +88,7 @@ int motor_remote(robot_t *IH){
 int motor_command(robot_t *IH){
 	int L,R;
 	float v=IH->motor_v;
-	float omega=IH->motor_o;	
+	float omega=IH->motor_o;
 
 //  return 0;
 

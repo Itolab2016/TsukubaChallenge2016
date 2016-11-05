@@ -16,7 +16,7 @@
 
 
 /*txt保存 読み込み*/
-#define LOGFILE "/media/ubuntu/itolab/log/test1104_1720.log"
+#define LOGFILE "/media/ubuntu/itolab/log/test1106_1245.log"
 #define READLOG "/home/syouyu/デスクトップ/kouhou_test"
 
 #define GPSDATA "/media/ubuntu/itolab/log/manualidokeido1104_1700.txt"

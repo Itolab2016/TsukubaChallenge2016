@@ -26,6 +26,9 @@
 #include "avoid.h"
 #include "localization.h"
 #include "tsukuba_def.h"
+//#include <thread>
+
+
 
 #define FILE_TIME "/media/ubuntu/Transcend/1027data/"
 
@@ -41,20 +44,21 @@ robot_t robo;
 
 enum{WAIT,MANUAL_RUN,AUTO_RUN};
 
+void motor_control(robot_t *robo){
+  motor_remote(robo);
+  motor_command(robo);
+}
+
+
+
 int main(){
-#if 1
+
   camera_open();
   motor_open();
   joy_open();
   dummy_open();
   open_TKK();
   open_URG();
-  //    system("aplay -q /home/ubuntu/Desktop/voice/urg.wav");
-  //    system("aplay -q /home/ubuntu/Desktop/voice/open.wav");
-
-
-  //cout<<"URG_open"<<endl;
-#endif
 
   //========================================
   //gettimeofday(&t,NULL);
@@ -88,18 +92,18 @@ int main(){
 
       else if(sankaku()==1/*SANKAKU*/){	//自立走行に変更
         robo.mode=AUTO_RUN;
-        set_waypoint();
+        init_waypoint(&robo);
         reset_time();
       }
 
-      else if(batu()==1/*BATU*/)break;//終了
+      else if(batu())break;//終了
 
     }
 
     //======== 手動モード ========
     else if(robo.mode==MANUAL_RUN){
 
-      if(start()==1/*START*/)
+      if(start()/*START*/)
       {
         cout<<"break"<<endl;
         robo.mode=WAIT;
@@ -139,44 +143,49 @@ int main(){
       }
 
       //WP記録
-      if(maru()==1/*MARU*/){
+      if(maru()){
 
         time_stamp(&robo);
         //  save_wp(&robo);
         cout<<"way_get"<<endl;
       }
-    }
+    }//<--Manual mode end
 
     //======== 自律モード ========
     else if(robo.mode==AUTO_RUN){
       if(on2Hz()==1)
       {
-        /*	capture2(&robo);
-            if(count!=0)
-            {
-            localization();//未完成
-            sfm(save_photo,&robo);
-            }*/
-        get_urg_data(&robo);  //LIDER(URG)のデータ取得
-        avoid_decide(&robo);     //未完成
-        navigation(&robo);    //比例航法
-        count++;
-      }
-
-      if(on100Hz()==1)
-      {
+        get_navi_data(&robo);     //モーションセンサーから航法データ取得
+        get_urg_data(&robo);      //LIDER(URG)のデータ取得
+        change_waypoint(&robo);    //Waypointの変更を判断
+        int d = avoid_decide(&robo);     //回避判定
+        if(d==0){
+          navigation(&robo);      //比例航法
+        }
+        else if(d == 1){//停止＆右旋回
+          robo.motor_v =  0.0;
+          robo.motor_o = -0.2;
+        }
+        else if(d ==-1){//停止＆左旋回
+          robo.motor_v =  0.0;
+          robo.motor_o =  0.2;
+        }
+        else if(d == 2){//停止
+          robo.motor_v =  0.0;
+          robo.motor_o =  0.0;
+        }
         time_stamp(&robo);
-        get_navi_data(&robo); //モーションセンサーから航法データ取得
         log(&robo);           //ログ記録
       }
-      motor_command(&robo); //モータへ司令
+      motor_command(&robo);
 
       if(start()==1/*START*/)
       {
         cout<<"break"<<endl;
         robo.mode=WAIT;
       }
-    }
+    }//<--Autonomus mode end
+
   }//<--while(1)に対応
 
   //停止して終了
