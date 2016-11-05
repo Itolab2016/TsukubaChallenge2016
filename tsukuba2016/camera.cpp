@@ -193,7 +193,7 @@ try {
   	recoverPose(E, p1, p2, R, t, focal, pp, mask);  
 	
 	//maskを使って精度を高める
-	for (size_t i = 0; i < mask.rows; ++i)
+	for (/*size_t*/ int i = 0; i < mask.rows; ++i)
 	{
 	        uchar *inliner = mask.ptr<uchar>(i);
 	        if (inliner[0] == 1)

@@ -165,7 +165,7 @@ int main(){
           sfm(save_photo,&robo);
           }*/
       get_urg_data(&robo);  //LIDER(URG)のデータ取得
-      avoid_decide();     //未完成
+      avoid_decide(&robo);     //未完成
       navigation(&robo);    //比例航法
       count++;
     }

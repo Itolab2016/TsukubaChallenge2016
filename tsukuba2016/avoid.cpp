@@ -2,44 +2,38 @@
 #include <math.h>
 #include "avoid.h"
 
-int avoid ( int data[1080] ) {
+int avoid_decide ( robot_t *urg ) {
+
 
 	//変数宣言
-	short n = 1080;
+	short n = 1081;
+	int data[n];
 	float dth = ( ( 3.0 * M_PI ) / 2.0 ) / n;
 	float L = 3000.0;
 	float W = 800.0;
 	float th , phi , x , y , xx , yy , tth;
-	short flag[n+1][181] , sflag[n+1] , ssflag;
+	short flag[n][181] , sflag[n] , ssflag;
+	float wth=1.570796;//目視線角
 
 	//フラグ初期化
-	for ( int i = 0 ; i < n+1 ; i++ ) {
+	for ( int i = 0 ; i < n ; i++ ) {
 		for ( int j = 0 ; j < 181 ; j++ ) {
 			flag[i][j] = 0;
 		}
 		sflag[i] = 0;
 	}
 	ssflag = 0;
-/*
-	//仮データ
-	float data[n+1];
-	for ( int i = 0 ; i < n+1 ; i++ ) {
-		data[i] = 4000.0;
-		if ( i == n / 2 ) {
-			data[i] = 2000.0; //前方2mに物体有
-		}
-	}
-	//float wth = 1.396263; //WPは80deg
-	//float wth = 1.645329; //WPは100deg
-	float wth = 1.570796; //WPは90deg
-*/
+
 	//フラグ建築
-	for ( int i = 0 ; i < n+1 ; i++ ) {
+	for ( int i = 0 ; i < n ; i++ ) {
 
 		th = dth * i - M_PI / 4.0;
 
 		x = data[i] * cos ( th );
 		y = data[i] * sin ( th );
+
+		urg->urg_pt[i]=data[i];
+		
 
 		//printf ( "th=%f,x=%f,y=%f\n" ,th ,x ,y );
 
@@ -74,7 +68,7 @@ int avoid ( int data[1080] ) {
 	}
 
 	//移動方向指定
-	if ( sflag[n/2] == 0 ) {
+	if ( sflag[n-1/2] == 0 ) {
 
 		//printf ( "0:直進\n" );
 		return 0;

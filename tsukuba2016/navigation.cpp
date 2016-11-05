@@ -27,7 +27,6 @@ vectar ecef2blh(vectar ec)
 /* ECEF座標からWGS84の{緯度,経度,楕円体高}へ変換 */
 {
 	vectar blh;
-	int i = 0;
 	double phi, ramda, height, p; 
 	double x, y, z;
 	double sita;
@@ -171,7 +170,7 @@ matrix matmat(matrix *m1, matrix *m2)
 vectar ecef2enu(vectar dest, vectar origin)
 /*--- ECEF座標を水平線座標(ENU)へ変換する */ 
 {
-	int i, j;
+	int i;
 	vectar mov, ret, blh;
 	matrix rotyp, rotzp1, rotzp2;
 	matrix mat_conv1, mat_conv2;
@@ -196,10 +195,14 @@ vectar ecef2enu(vectar dest, vectar origin)
 
 int set_waypoint(void){
 
+	cout<<"set_waypoint"<<endl;
+	return 0;
+
 }
 
 int change_waypoint(void){
-		double lat, lon, hig, lat_o, lon_o, hig_o;
+		double lat=0.0, lon=0.0, hig=0.0;
+		double lat_o=0.0, lon_o=0.0, hig_o=0.0;
 
 		vectar ecef, ecef_o, enu;
 
@@ -221,12 +224,12 @@ int navigation(robot_t *robo)
 //比例航法を用いてロボットを誘導（navigation）する。
 
 {	
-  double wide=602.0;
+//  double wide=602.0;
   double n=1.0;
   double h=0.5;
-  double lambda_old;	
-  double omega1;
-  double lat,lon,high,x,y;
+//  double lambda_old;	
+//  double omega1;
+  double lat,lon,high;
   double lat_g, lon_g;
   double xt,yt;
   vectar ecef_o;  //ロボットのecef座標
@@ -244,8 +247,6 @@ int navigation(robot_t *robo)
   ecef_o = blh2ecef(lat, lon, high);  //ロボットの座標（ここが原点）
   ecef_t = blh2ecef(lat_g, lon_g, high);//ターゲットの座標
   enu_t = ecef2enu(ecef_t,ecef_o);  //enu座標系でのターゲットの座標
-  x=0.0;
-  y=0.0;
   xt=enu_t.a[0];
   yt=enu_t.a[1];
   

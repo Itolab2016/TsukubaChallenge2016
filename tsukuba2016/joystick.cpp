@@ -36,12 +36,15 @@ int joy_open(void)
 	for(int i=0;i<=num_of_buttons;i++){
 		read ( joy_fd , &js , sizeof ( js_event ) );
 		}
+	return 0;
 
 }
 
 int dummy_open(){
 	joy_button.resize( 17 , 0 );
 	joy_axis.resize( 29 , 0 );
+
+	return 0;
 }
 
 void joy_read (void)
